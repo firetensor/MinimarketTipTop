@@ -17,7 +17,7 @@
             </div>
           </nav>
 
-          <center><h1>Mesa de Partes Virtual</h1></center>
+          <center><h1>Mesa de Partes Virtual 1</h1></center>
         
         <div class="row row-cols-1 row-cols-md-2 g-4">
           
