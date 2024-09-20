@@ -6,6 +6,7 @@
 @section('contenido')
 
 <div class="container">
+    MI PERFIL
 
 </div>
 @endsection
