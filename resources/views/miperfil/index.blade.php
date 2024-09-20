@@ -5,7 +5,7 @@
 
 @section('contenido')
 
-<div class="container ">
+<div class="container">
 
 </div>
 @endsection
