@@ -20,7 +20,7 @@
         <div class="col-5">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">CREAR ROLcit</h5>
+              <h5 class="card-title">CREAR ROL</h5>
               <p class="card-text"></p>
                 <form id="RoleForm" name="RoleForm" action="{{--route('role.store')--}}">
                 @csrf
