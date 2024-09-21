@@ -370,7 +370,7 @@
                     name: 'name',
                     'render': function(data, type, row) {
                         return @can('role.show') data.action3 +' '+ @endcan ''
-                            @can('role.edit') + data.action1 +' '+ @endcan ''
+                            @can('role.show') + data.action1 +' '+ @endcan ''
                             @can('role.destroy') +data.action2 @endcan;
                     }
                 }
