@@ -14,13 +14,13 @@
   <link rel="stylesheet" href="/css/darkmode.css">
   <link rel="stylesheet" href="/css/imagenfondo.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  
+
   {{--libreria sweetalert2--}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
   {{--JQUERY--}}
   <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-  
+
   {{--para datatables--}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
@@ -43,7 +43,7 @@
       <li class="nav-item d-none d-sm-inline-block ">
         <a href="#" class="nav-link">Contact</a>
       </li>
-      
+
     </ul>
     <div class="col-1 modo" id="modo">
       <i class="fas fa-toggle-on"></i>
@@ -55,17 +55,17 @@
           @csrf<!-- crea un token de seguridad-->
           <button class="btn btn-light" type="submit">
             <i class="fa fa-power-off"></i> Salir</button>
-            
+
         </form>
-        
+
       </li>
     </ul>
-    
+
     {{--<form action="route('logout')" method="post" class="col-1">
       @csrf<!-- crea un token de seguridad-->
       <button class="btn btn-info btn-block" type="submit">
         <i class="fa fa-power-off"></i> Salir</button>
-        
+
     </form>--}}
 
   </nav>
@@ -106,7 +106,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              
               @can('permiso.index')
               <li class="nav-item">
                 <a href="{{route('permiso.index')}}" class="nav-link {{ request()->is('permiso*') ? 'active' : '' }}">
@@ -128,10 +127,34 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuario</p>
                 </a>
-                
+
               </li>
             </ul>
           </li>
+--------------------------------------------------------
+
+<li class="nav-item">
+    <a href="#" class="nav-link active">
+        <i class="nav-icon fas fa-address-card"></i>
+        <p>
+            Clientes
+            <i class="fa-thin fa-person"></i>
+        </p>
+    </a>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+          <a href="{{route('cliente.index')}}"  class="nav-link ">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Listado de clientes</p>
+          </a>
+
+        </li>
+      </ul>
+</li>
+----------------------------------------------------------------
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chart-pie"></i>
@@ -160,7 +183,7 @@
               <li class="nav-item">
                 <a href="{{--route('listadoL')--}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Libros</p> 
+                  <p>Libros</p>
                 </a>
               </li>
             </ul>
@@ -189,12 +212,12 @@
               </li>
             </ul>
           </li>
-          
-          
+
+
           {{-- @if(auth()->user()->roles->Descripcionrol == 'ROLE_USER')
               <h2>Eres un cliente</h2>
           @endif --}}
-          
+
           <li class="nav-item">
             <a href="{{--route('tienda')--}}" class="nav-link">
               <i class="fas fa-store    "></i>
@@ -224,9 +247,9 @@
                 {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
-            
+
           </li>
-          
+
           <li class="nav-item">
             <a href="{{--route('usuario.index')--}}" class="nav-link">
              <i class="fa fa-users" aria-hidden="true"></i>
@@ -236,7 +259,7 @@
                 {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
-            
+
           </li>
           <li class="nav-item">
             <a href="{{--route('rol.index')--}}" class="nav-link">
@@ -247,20 +270,20 @@
                 {{-- <i class="right fas fa-angle-left"></i> --}}
               </p>
             </a>
-            
+
           </li>
-          
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
-      
+
     </div>
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    
+
     <!-- Content Header (Page header) -->
     {{-- <section class="content-header">
       <div class="container-fluid">
