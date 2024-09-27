@@ -24,13 +24,13 @@
                     <p class="card-text"></p>
                     <form  id="PermisoForm" name="PermisoForm" action="{{--route('permiso.store')--}}" >
                         @csrf
-                
+
                             <div class="form-group row">
                                 <div class="col-12">
                                     <input type="text" id="permiso_id_edit" hidden>
                                     <label class="control-label">Nombre:</label>
                                     <input type="text" id="nombre" name="nombre" class="form-control input_user @error('nombre') is-invalid @enderror"  placeholder="Nombre" required>
-                                    @error('nombre') 
+                                    @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{$message}}</strong>
                                         </span>
@@ -39,7 +39,7 @@
                                 <div class="col-12">
                                     <label class="control-label">Ruta:</label>
                                     <input type="text" id="name" name="name" class="form-control input_user @error('name') is-invalid @enderror"  placeholder="Ruta" required>
-                                    @error('name') 
+                                    @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{$message}}</strong>
                                         </span>
@@ -48,17 +48,17 @@
                                 <div class="col-12">
                                     <label class="control-label">Descripción:</label>
                                     <input type="text" id="descripcion" name="descripcion" class="form-control input_user @error('descripcion') is-invalid @enderror"  placeholder="Descripcion" required>
-                                    @error('descripcion') 
+                                    @error('descripcion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{$message}}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                             </div>
-                        
+
                             <p></p>
-                            
+
                             @can('permiso.create')
                             <button id="saveBtn" class="btn btn-primary"><i class="fas fa-save"></i>Guardar</button>
                             @endcan
@@ -77,7 +77,7 @@
                 <div class="card-body">
                   <h5 class="card-title">LISTA DE PERMISOS</h5>
                   <p class="card-text">
-                    
+
                     <table class="table" id="table-permisos">
                         <thead style="background-color:#1C91EC;color: #fff;">
                         <tr>
@@ -99,13 +99,13 @@
                             @endforeach
                         @endif
                         </tbody> --}}
-                    
+
                     </table>
-                
+
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Modal Ver detalles-->
@@ -156,7 +156,7 @@
     setTimeout(function () {
         //selecciono el id mensaje y lo remuevo en 2000 segundos
         document.querySelector('#mensaje').remove();
-        
+
     }, 6000);
 </script>
 <script>
@@ -264,7 +264,7 @@
             if ($confirm == true) {
                 $.ajax({
                     type: "DELETE",
-                    
+
                     url: '{{ route('permiso.destroy', ['permiso' => ':permiso']) }}'.replace(':permiso', Permiso_id_delete),
                     data: {
                         _token: '{{ csrf_token() }}'
@@ -361,7 +361,7 @@
                     $('#ver_fecha_update').text(moment(data.data.updated_at).format('YYYY-MM-DD HH:mm:ss'));
 
                 })
-           
+
         });
     });
 </script>
