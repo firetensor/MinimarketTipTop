@@ -424,7 +424,6 @@
                     $('#ver_email').text(data.data.email);
                     $('#ver_fecha_registro').text(moment(data.data.created_at).format('YYYY-MM-DD HH:mm:ss'));
                     $('#ver_fecha_update').text(moment(data.data.updated_at).format('YYYY-MM-DD HH:mm:ss'));
-
                 })
            
         });
