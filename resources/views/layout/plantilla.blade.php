@@ -26,6 +26,12 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap5.css">
 
+
+  <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<!-- DataTables Buttons CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -131,6 +137,29 @@
               </li>
             </ul>
           </li>
+--------------------------------------------------
+<li class="nav-item">
+    <a href="#" class="nav-link active">
+        <i class="fa-solid fa-icons"></i>
+        <p>
+            Categorias
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+          <a href="{{route('categoria.index')}}"  class="nav-link ">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Listado de categorias</p>
+          </a>
+
+        </li>
+      </ul>
+</li>
+-----------------------------------------------
+
 --------------------------------------------------------
 
 <li class="nav-item">
@@ -335,7 +364,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 <script src="/js/dark.js"></script>
+
 @yield('script')
+
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
@@ -347,4 +379,6 @@
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.js"></script>
 <script src="https://cdn.datatables.net/responsive/3.0.1/js/responsive.bootstrap5.js"></script>
+
+
 </html>
