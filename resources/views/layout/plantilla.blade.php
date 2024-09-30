@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Token CSRF -->
   <title>@yield('titulo')</title><!--parte cambiante con yield-->
 
   <!-- Google Font: Source Sans Pro -->
@@ -84,8 +85,11 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex ">
         <div class="image">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-           <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          {{-- <i class="fa fa-user-circle" aria-hidden="true"></i> --}}
+           {{-- <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
+           <img id="image-inicial" name="image-inicial" 
+            src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('storage/avatares/placeholder.png') }}" 
+            class="img-circle elevation-2" alt="User Image"/>
         </div>
         <div class="info usuario">
           <a href=""  class="d-block" style="text-decoration:none;">Usuario: {{auth()->user()->name}}</a>
@@ -239,7 +243,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{--route('perfil.index')--}}" class="nav-link">
+            <a href="{{route('perfil.index')}}" class="nav-link {{request()->is('perfil*') ? 'active' : ''}}">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
               {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
               <p>

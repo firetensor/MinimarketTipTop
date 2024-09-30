@@ -6,6 +6,7 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,4 +44,6 @@ Route::get('/cancelarusuario',function(){
     return redirect()->route('usuario.index')->with('datos','Acción Cancelada...!');
   })->name('usuario.cancelar');
 
-  Route::resource('cliente', ClienteController::class);
+Route::resource('perfil', PerfilController::class);
+
+Route::resource('cliente', ClienteController::class);
