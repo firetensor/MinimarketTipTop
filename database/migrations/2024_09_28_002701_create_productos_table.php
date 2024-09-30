@@ -19,7 +19,10 @@ return new class extends Migration
             $table->integer('stock');
             $table->integer('stock_minimo');
             $table->integer('stock_maximo');
-            $table->decimal('precio', 10, 2);
+            $table->decimal('precio_compra', 10, 2);
+            $table->decimal('precio_venta', 10, 2);
+            $table->date('fecha_ingreso');
+            $table->text('imagen');
             $table->timestamps();
 //claves foraneas
             $table->unsignedBigInteger('id_categoria');
