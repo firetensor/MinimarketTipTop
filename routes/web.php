@@ -9,6 +9,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PerfilController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,8 @@ Route::get('/cancelarusuario',function(){
 Route::resource('cliente', ClienteController::class);
 Route::resource('categoria', CategoriaController::class);
 Route::resource('producto', ProductoController::class);
+
+Route::resource('perfil', PerfilController::class);
 
 
 
