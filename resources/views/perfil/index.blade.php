@@ -51,8 +51,8 @@
                                 <select class=" form-control select2 select2-hiddenaccessible selectpicker" style="width: 100%;" data-select2-id="1" tabindex="-1" ariahidden="true" id="tipodocumentouser" name="tipodocumentouser" data-live-search="true">
                                     <option value="0" selected>- Seleccione tipo documento -</option>
                                     
-                                    <option value="D" @if(auth()->user()->tipodocumentouser) selected @endif>DNI</option>
-                                    <option value="C" @if(auth()->user()->tipodocumentouser) selected @endif>CARNET EXT.</option>
+                                    <option value="D" @if(auth()->user()->tipodocumentouser=="D") selected @endif>DNI</option>
+                                    <option value="C" @if(auth()->user()->tipodocumentouser=="C") selected @endif>CARNET EXT.</option>
                                 </select>
                             </div>
                             <div class="col-6">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-4">
                                 <label class="control-label">Fecha de nacimiento:</label>
-                                <input class="form-control @error('fechanacimientouser') is-invalid @enderror" placeholder="Fecha de nacimiento" type="date" id="fechanacimientouser" name="fechanacimientouser"/>
+                                <input class="form-control @error('fechanacimientouser') is-invalid @enderror" placeholder="Fecha de nacimiento" type="date" id="fechanacimientouser" name="fechanacimientouser" value="{{auth()->user()->fechanacimientouser}}"/>
                                 @error('fechanacimientouser')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
@@ -78,8 +78,8 @@
                                 <select class=" form-control select2 select2-hiddenaccessible selectpicker" style="width: 100%;" data-select2-id="1" tabindex="-1" ariahidden="true" id="sexouser" name="sexouser" data-live-search="true">
                                     <option value="0" selected>- Seleccione sexo -</option>
                                     
-                                    <option value="F" @if(auth()->user()->sexouser) selected @endif>FEMENINO</option>
-                                    <option value="M" @if(auth()->user()->sexouser) selected @endif>MASCULINO</option>
+                                    <option value="F" @if(auth()->user()->sexouser == "F") selected @endif>FEMENINO</option>
+                                    <option value="M" @if(auth()->user()->sexouser=="M") selected @endif>MASCULINO</option>
                                 </select>
                             </div>
                             <div class="col-4">

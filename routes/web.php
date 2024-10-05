@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\ProveedorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::resource('categoria', CategoriaController::class);
 Route::resource('producto', ProductoController::class);
 
 Route::resource('perfil', PerfilController::class);
+Route::get('/contraseña', [PerfilController::class,'contraseña'])->name('perfil.contraseña');
+Route::post('/contraseña/cambiar', [PerfilController::class,'cambiarcontraseña'])->name('perfil.cambiarcontraseña');
+Route::resource('proveedor', ProveedorController::class);
+
+
 
 
 

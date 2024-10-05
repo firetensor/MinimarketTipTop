@@ -7,8 +7,11 @@ use App\Models\User;
 use Faker\Core\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\returnCallback;
 
 class PerfilController extends Controller
 {
@@ -25,7 +28,12 @@ class PerfilController extends Controller
      */
     public function create()
     {
-        //
+        
+    }
+
+    public function contraseña()
+    {
+        return view('perfil.contraseña');
     }
 
     /**
@@ -105,6 +113,60 @@ class PerfilController extends Controller
         }
     }
 
+    public function cambiarcontraseña(Request $request)
+    {
+        $data=request()->validate([
+            'password'=>'required',
+            'nuevopassword'=>'required',
+            'reppassword'=>'required'
+
+        ],
+        [
+            'password.required'=>'Ingresa actual Contraseña',
+            'nuevopassword.required'=>'Ingresa nueva Contraseña',
+            'reppassword.required'=>'Ingresa repetición de nueva Contraseña'
+        ]);
+        $email=$request->get('email'); //se almacenara el valor de name ingresado
+        $query=User::where('email','=',$email)->get();
+        $hashp=$query[0]->password;
+
+        $usuario= User::find($query[0]->id);
+        $password=$request->get('password');
+        if(password_verify($password, $hashp)) {
+            $nuevopassword=$request->get('nuevopassword');
+            $reppassword=$request->get('reppassword');
+            if($nuevopassword == $reppassword) {
+                $usuario->password = Hash::make($request->nuevopassword);
+                $usuario->save();
+                //return redirect()->route('perfil.index')->with('datos','Contraseña actualizada con éxito ...!');
+                // Retornar éxito en formato JSON
+                return response()->json([
+                    'success' => '¡Contraseña actualizada con éxito!'
+                ]);
+            }
+            else{
+            //     return back()->withErrors(['nuevopassword'=>'Las contraseñas no coinciden','reppassword'=>'Las contraseñas no coinciden'])
+            // ->withInput(request(['email', 'password','nuevopassword','reppassword']));
+            return response()->json([
+                'errors' => [
+                    'nuevopassword' => ['Las contraseñas no coinciden'],
+                    'reppassword' => ['Las contraseñas no coinciden']
+                ],
+                'input' => $request->only('email', 'nuevopassword', 'reppassword')
+            ], 422);
+
+            }
+        } else {
+            // return back()->withErrors(['password'=>'Contraseña no valida'])
+            // ->withInput(request(['email', 'password','nuevopassword','reppassword']));
+            return response()->json([
+                'errors' => ['password' => ['Contraseña actual incorrecta']],
+                'input' => $request->only('email', 'nuevopassword', 'reppassword')  // Retorna valores ingresados
+            ], 422);
+        }
+
+    }
+
     /**
      * Display the specified resource.
      */
@@ -140,7 +202,7 @@ class PerfilController extends Controller
             'direccionuser' => 'nullable|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Imagen opcional
         ]);
-        dd($request->all()); 
+        
 
         $user = User::findOrFail($request->update_id);
         $user->name = $request->name;

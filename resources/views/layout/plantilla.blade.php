@@ -92,7 +92,7 @@
             class="img-circle elevation-2" alt="User Image"/>
         </div>
         <div class="info usuario">
-          <a href=""  class="d-block" style="text-decoration:none;">Usuario: {{auth()->user()->name}}</a>
+          <a href=""  class="d-block" style="text-decoration:none;">{{auth()->user()->name}}</a>
           <a class="d-block" style="text-decoration:none;"></a>
         </div>
       </div>
@@ -136,9 +136,16 @@
             </ul>
           </li>
 --------------------------------------------------------
-
 <li class="nav-item">
-    <a href="#" class="nav-link active">
+  <a href="{{route('proveedor.index')}}" class="nav-link">
+    <i class="fas fa-user-tie"></i>
+      <p>
+          Proveedores
+      </p>
+  </a>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
         <i class="nav-icon fas fa-address-card"></i>
         <p>
             Clientes
@@ -242,15 +249,33 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{route('perfil.index')}}" class="nav-link {{request()->is('perfil*') ? 'active' : ''}}">
+          <li class="nav-item {{ request()->is('perfil*') || request()->is('contraseña*') ? 'menu-open' : '' }}"  >
+            <a href="{{--route('perfil.index')--}}" class="nav-link {{ request()->is('perfil*') || request()->is('contraseña*') ? 'active' : '' }}">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
               {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
               <p>
                 Mi Perfil
-                {{-- <i class="right fas fa-angle-left"></i> --}}
+                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('perfil.index')}}" class="nav-link {{ request()->is('perfil*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Datos personales</p>
+                  
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('perfil.contraseña')}}" class="nav-link {{ request()->is('contraseña*') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Configuración</p>
+                  
+                </a>
+              </li>
+            </ul>
 
           </li>
 
