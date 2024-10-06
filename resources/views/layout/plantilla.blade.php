@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Token CSRF -->
   <title>@yield('titulo')</title><!--parte cambiante con yield-->
-
+  <script src="https://kit.fontawesome.com/072340084d.js" crossorigin="anonymous"></script>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="/adminlte/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="/css/darkmode.css">
@@ -87,8 +88,8 @@
         <div class="image">
           {{-- <i class="fa fa-user-circle" aria-hidden="true"></i> --}}
            {{-- <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
-           <img id="image-inicial" name="image-inicial" 
-            src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('storage/avatares/placeholder.png') }}" 
+           <img id="image-inicial" name="image-inicial"
+            src="{{ auth()->user()->avatar ? asset(auth()->user()->avatar) : asset('storage/avatares/placeholder.png') }}"
             class="img-circle elevation-2" alt="User Image"/>
         </div>
         <div class="info usuario">
@@ -135,7 +136,145 @@
               </li>
             </ul>
           </li>
---------------------------------------------------------
+
+<li class="nav-item {{ request()->is('perfil*') || request()->is('contraseña*') ? 'menu-open' : '' }}"  >
+    <a href="{{--route('perfil.index')--}}" class="nav-link {{ request()->is('perfil*') || request()->is('contraseña*') ? 'active' : '' }}">
+      <i class="fa fa-user-circle" aria-hidden="true"></i>
+      {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
+      <p>
+        Mi Perfil
+         <i class="right fas fa-angle-left"></i>
+      </p>
+    </a>
+    <ul class="nav nav-treeview">
+      <li class="nav-item">
+        <a href="{{route('perfil.index')}}" class="nav-link {{ request()->is('perfil*') ? 'active' : '' }}">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Datos personales</p>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav nav-treeview">
+      <li class="nav-item">
+        <a href="{{route('perfil.contraseña')}}" class="nav-link {{ request()->is('contraseña*') ? 'active' : '' }}">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Configuración</p>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="fa-solid fa-layer-group"></i>
+        <p>
+            Categorias
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('categoria.index') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de categorias</p>
+            </a>
+
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="fa-solid fa-check"></i>
+        <p>
+            Almacén
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('producto.index') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de productos</p>
+            </a>
+
+        </li>
+    </ul>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('producto.create') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Creación de productos</p>
+            </a>
+
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <p>
+            Compras
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('categoria.index') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de compras</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="fa-solid fa-store"></i>
+        <p>
+            Ventas
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('categoria.index') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de ventas</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="fas fa-people-arrows"></i>
+        <p>
+            Clientes
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+
+    <ul class="nav nav-treeview">
+
+        <li class="nav-item">
+            <a href="{{ route('cliente.index') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Listado de clientes</p>
+            </a>
+
+        </li>
+    </ul>
+
+
 <li class="nav-item">
   <a href="{{route('proveedor.index')}}" class="nav-link">
     <i class="fas fa-user-tie"></i>
@@ -144,163 +283,11 @@
       </p>
   </a>
 </li>
-<li class="nav-item">
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-address-card"></i>
-        <p>
-            Clientes
-            <i class="fa-thin fa-person"></i>
-        </p>
-    </a>
-
-    <ul class="nav nav-treeview">
-
-        <li class="nav-item">
-          <a href="{{route('cliente.index')}}"  class="nav-link ">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Listado de clientes</p>
-          </a>
-
-        </li>
-      </ul>
-</li>
-----------------------------------------------------------------
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Gestion Abastecimiento
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('listado')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Proveedor</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('listadoB')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Bibliotecario</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('listadoL')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Libros</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('listadoP')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pedidos</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('listadoDP')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Detalle Pedido</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{--route('graficoA')--}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Reportes</p>
-                </a>
-              </li>
-            </ul>
-          </li>
 
 
-          {{-- @if(auth()->user()->roles->Descripcionrol == 'ROLE_USER')
-              <h2>Eres un cliente</h2>
-          @endif --}}
 
-          <li class="nav-item">
-            <a href="{{--route('tienda')--}}" class="nav-link">
-              <i class="fas fa-store    "></i>
-              {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
-              <p>
-                Tienda
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{--route('comprobante.index')--}}" class="nav-link">
-              <i class="fas fa-receipt    "></i>
-              {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
-              <p>
-                Comprobantes-Tienda
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item {{ request()->is('perfil*') || request()->is('contraseña*') ? 'menu-open' : '' }}"  >
-            <a href="{{--route('perfil.index')--}}" class="nav-link {{ request()->is('perfil*') || request()->is('contraseña*') ? 'active' : '' }}">
-              <i class="fa fa-user-circle" aria-hidden="true"></i>
-              {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
-              <p>
-                Mi Perfil
-                 <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('perfil.index')}}" class="nav-link {{ request()->is('perfil*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Datos personales</p>
-                  
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('perfil.contraseña')}}" class="nav-link {{ request()->is('contraseña*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Configuración</p>
-                  
-                </a>
-              </li>
-            </ul>
 
-          </li>
 
-          <li class="nav-item">
-            <a href="{{--route('usuario.index')--}}" class="nav-link">
-             <i class="fa fa-users" aria-hidden="true"></i>
-              {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
-              <p>
-                Usuarios
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-
-          </li>
-          <li class="nav-item">
-            <a href="{{--route('rol.index')--}}" class="nav-link">
-              <i class="fa fa-align-justify" aria-hidden="true"></i>
-              {{-- <i class="nav-icon fas fa-chart-pie"></i> --}}
-              <p>
-                Roles
-                {{-- <i class="right fas fa-angle-left"></i> --}}
-              </p>
-            </a>
-
-          </li>
 
         </ul>
       </nav>
@@ -313,22 +300,6 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 
-    <!-- Content Header (Page header) -->
-    {{-- <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Blank Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section> --}}
 
     <!-- Main content -->
     <section class="content">

@@ -26,8 +26,8 @@
               <th scope="col">Nombre</th>
               <th scope="col">Descripión</th>
               <th scope="col">Stock</th>
-              <th scope="col">Stock mínimo</th>
-              <th scope="col">Stock máximo</th>
+              {{-- <th scope="col">Stock mínimo</th>
+              <th scope="col">Stock máximo</th>  --}}
               <th scope="col">Precio compra</th>
               <th scope="col">Precio venta</th>
               <th scope="col">Fecha compra</th>
@@ -41,28 +41,52 @@
                   <td><center>{{ $producto->id}}</center></td>
                   <td>{{ $producto->codigo }}</td>
                   <td>{{ $producto->categoria ? $producto->categoria->nombre_categoria : 'Sin categoría' }}</td>
-                  <td><img src="{{ $producto->imagen}}" width="50px" alt="" ></td>
+                  <td><img src="{{asset($producto->imagen)}}" width="50px" alt="" ></td>
                   <td>{{ $producto->nombre_producto }}</td>
                   <td>{{ $producto->descripcion_producto }}</td>
                   <td>{{ $producto->stock }}</td>
-                  <td>{{ $producto->stock_minimo }}</td>
-                  <td>{{ $producto->stock_maximo }}</td>
+                  {{-- <td>{{ $producto->stock_minimo }}</td>
+                  <td>{{ $producto->stock_maximo }}</td> --}}
                   <td>{{ $producto->precio_compra }}</td>
                   <td>{{ $producto->precio_venta }}</td>
                   <td>{{ $producto->fecha_ingreso }}</td>
                   <td>{{ $producto->user ? $producto->user->name : 'Sin usuario' }}</td>
 
                   <td>
-                      <center>
+                    <center>
                         <div class="btn-group">
-                          <button type="button" class="btn btn-info"><i class="fa fa-eye"></i></button>
-                          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-update"><i class="fa fa-pencil-alt"></i></button>
+                            <a href="{{ route('producto.show', $producto->id) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
 
-                          <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                          </div>
-                      </center>
-                  </td>
+                            <a href="{{ route('producto.edit', $producto->id) }}" class="btn btn-success">
+                                <i class="fa fa-pencil-alt"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $producto->id }}"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </center>
+                </td>
               </tr>
+
+              <div class="modal fade" id="modal-delete-{{ $producto->id }}" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDeleteLabel">Eliminar Producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estás seguro de que deseas eliminar este producto?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="{{ route('producto.destroy', $producto->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
           @endforeach
           </tbody>
           </table>
