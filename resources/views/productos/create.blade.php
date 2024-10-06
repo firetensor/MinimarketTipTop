@@ -13,6 +13,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3>Llene los datos con cuidado</h3>
@@ -28,7 +29,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Código:</label>
-                                                        <input type="text" class="form-control" name="codigo" value="{{ $nuevoCodigo }}" disabled>
+                                                        <input type="text" class="form-control" name="codigo" value="{{ $nuevoCodigo }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -54,7 +55,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Usuario</label>
-                                                        <input type="text" class="form-control" value="{{ $usuario->name }}" disabled>
+                                                        <input type="text" class="form-control" value="{{ $usuario->name }}">
                                                         <input type="hidden" name="id_usuario" value="{{ $usuario->id }}">
                                                     </div>
                                                 </div>
@@ -110,29 +111,22 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="">Imagen del producto</label>
-                                                <input type="file" name="imagen" id="file" class="form-control">
+                                                <input type="file" name="imagen" id="file" class="form-control" accept="image/*">
                                                 <output id="list"></output>
                                                 <script>
-                                                    function archivo(evt) {
-                                                        var files = evt.target.files; // FileList object
-                                                        // Obtenemos la imagen del campo "file".
-                                                        for (var i = 0, f; f = files[i]; i++) {
-                                                            // Solo admitimos imágenes.
-                                                            if (!f.type.match('image.*')) {
-                                                                continue;
-                                                            }
+                                                    function previsualizarImagen(evt) {
+                                                        var archivo = evt.target.files[0]; // Solo previsualiza el primer archivo seleccionado
+                                                        if (archivo && archivo.type.match('image.*')) {
                                                             var reader = new FileReader();
-                                                            reader.onload = (function (theFile) {
-                                                                return function (e) {
-                                                                    // Insertamos la imagen
-                                                                    document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="50%" title="', escape(theFile.name), '"/>'].join('');
-                                                                };
-                                                            })(f);
-                                                            reader.readAsDataURL(f);
+                                                            reader.onload = function (e) {
+                                                                document.getElementById("list").innerHTML = `<img class="thumb thumbnail" src="${e.target.result}" width="50%" title="${archivo.name}"/>`;
+                                                            };
+                                                            reader.readAsDataURL(archivo); // Lee el archivo como una data URL
                                                         }
                                                     }
-                                                    document.getElementById('file').addEventListener('change', archivo, false);
+                                                    document.getElementById('file').addEventListener('change', previsualizarImagen);
                                                 </script>
+
                                             </div>
                                         </div>
                                     </div>

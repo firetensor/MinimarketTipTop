@@ -41,12 +41,10 @@
                                     <td>
                                         <center>
                                             <div class="btn-group">
-                                                <button type="button" class="btn btn-info"><i
-                                                        class="fa fa-eye"></i>Ver</button>
                                                 <!-- Botón que abre el modal de edición específico para cada categoría -->
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                     data-bs-target="#modal-edit-{{ $categoria->id }}"><i
-                                                        class="fa fa-pencil-alt"></i>Editar</button>
+                                                        class="fa fa-pencil-alt"></i></button>
 
                                                 <!-- Modal para editar categoría específico para cada categoría -->
                                                 <div class="modal fade" id="modal-edit-{{ $categoria->id }}" tabindex="-1"
@@ -88,7 +86,7 @@
 
                                                 <button type="button" class="btn btn-danger"
                                                     onclick="deleteCategoria({{ $categoria->id }})">
-                                                    <i class="fa fa-trash"></i> Eliminar
+                                                    <i class="fa fa-trash"></i>
                                                 </button>
 
                                             </div>

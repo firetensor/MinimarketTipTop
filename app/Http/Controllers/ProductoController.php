@@ -6,6 +6,7 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ProductoController extends Controller
 {
@@ -17,6 +18,10 @@ class ProductoController extends Controller
         // Pasa las categorías a la vista
         return view('productos.index', compact('productos'));
     }
+
+
+
+
 
     public function store(Request $request)
     {
@@ -52,8 +57,12 @@ class ProductoController extends Controller
 
  // Guardar la imagen si se proporciona
  if ($request->hasFile('imagen')) {
-    $producto->imagen = $request->file('imagen')->store('imagenes'); // Ajusta la ruta según sea necesario
+    $fileName = $request->file('imagen')->getClientOriginalName();
+    $request->file('imagen')->move(public_path('images/productos'), $fileName);
+    // Guardar la ruta relativa en la base de datos
+    $producto->imagen = 'images/productos/' . $fileName;
 }
+
 
 // Guardar el producto en la base de datos
 $producto->save();
@@ -61,11 +70,6 @@ $producto->save();
 // Redirigir a la lista de productos con un mensaje de éxito
 return redirect()->route('producto.index')->with('success', 'Producto guardado con éxito.');
     }
-
-
-
-
-
 
     public function create()
     {
@@ -82,5 +86,82 @@ return redirect()->route('producto.index')->with('success', 'Producto guardado c
         // Pasar el código generado, las categorías y el usuario a la vista
         return view('productos.create', compact('nuevoCodigo', 'categorias', 'usuario'));
     }
+
+    public function edit($id)
+    {
+        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::all(); // Asegúrate de tener el modelo Categoria
+        $usuario = auth()->user();
+        return view('productos.update', compact('producto', 'categorias', 'usuario'));
+
+
+
+    }
+
+
+    public function update(Request $request, Producto $producto)
+    {
+        // Validar la entrada
+        $request->validate([
+            'codigo' => 'required|string|max:255',
+            'nombre_producto' => 'required|string|max:255',
+            'descripcion_producto' => 'nullable|string',
+            'stock' => 'required|integer|min:0',
+            'precio_compra' => 'required|numeric|min:0',
+            'precio_venta' => 'required|numeric|min:0',
+            'id_categoria' => 'required|exists:categorias,id',
+            'id_usuario' => 'required|exists:users,id',
+            'imagen' => 'nullable|image|max:2048' // Validación de la imagen
+        ]);
+
+        // Actualizar el producto
+        $producto->codigo = $request->codigo;
+        $producto->nombre_producto = $request->nombre_producto;
+        $producto->descripcion_producto = $request->descripcion_producto;
+        $producto->stock = $request->stock;
+        $producto->precio_compra = $request->precio_compra;
+        $producto->precio_venta = $request->precio_venta;
+        $producto->id_categoria = $request->id_categoria;
+        $producto->id_usuario = $request->id_usuario;
+
+        // Guardar la nueva imagen si se proporciona
+        if ($request->hasFile('imagen')) {
+            // Opcional: eliminar la imagen anterior si es necesario
+            if ($producto->imagen) {
+                // Eliminar el archivo anterior
+                File::delete(public_path($producto->imagen));
+            }
+
+            $fileName = $request->file('imagen')->getClientOriginalName();
+            $request->file('imagen')->move(public_path('images/productos'), $fileName);
+            // Guardar la nueva ruta en la base de datos
+            $producto->imagen = 'images/productos/' . $fileName;
+        }
+
+        // Guardar los cambios en la base de datos
+        $producto->save();
+
+        // Redirigir a la lista de productos con un mensaje de éxito
+        return redirect()->route('producto.index')->with('success', 'Producto actualizado correctamente');
+    }
+
+    public function show($id)
+{
+    $producto = Producto::findOrFail($id);
+    $categorias = Categoria::all(); // Si estás manejando categorías
+    $usuario = auth()->user(); // Si el usuario autenticado es relevante
+    return view('productos.show', compact('producto', 'categorias', 'usuario'));
+}
+
+
+public function destroy($id)
+{
+    $producto = Producto::findOrFail($id);
+    $producto->delete();
+
+    return redirect()->route('producto.index')->with('success', 'Cliente eliminado con éxito.');
+}
+
+
 
 }
