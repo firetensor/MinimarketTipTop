@@ -41,10 +41,17 @@
                   <td><center>{{ $producto->id}}</center></td>
                   <td>{{ $producto->codigo }}</td>
                   <td>{{ $producto->categoria ? $producto->categoria->nombre_categoria : 'Sin categoría' }}</td>
-                  <td><img src="{{asset($producto->imagen)}}" width="50px" alt="" ></td>
+                  <td><center><img src="{{asset($producto->imagen)}}" width="50px" alt="" ><center></td>
                   <td>{{ $producto->nombre_producto }}</td>
                   <td>{{ $producto->descripcion_producto }}</td>
-                  <td>{{ $producto->stock }}</td>
+                  @if ($producto->stock<$producto->stock_minimo)
+                  <td style="background-color: #ff6161;"><center>{{ $producto->stock }}<center></td>
+                  @elseif($producto->stock>$producto->stock_maximo)
+                  <td style="background-color: #44f45e;"><center>{{ $producto->stock }}<center></td>
+                  @else
+                  <td><center>{{ $producto->stock}}<center></td>
+                  @endif
+
                   {{-- <td>{{ $producto->stock_minimo }}</td>
                   <td>{{ $producto->stock_maximo }}</td> --}}
                   <td>{{ $producto->precio_compra }}</td>
