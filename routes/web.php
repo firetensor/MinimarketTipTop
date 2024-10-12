@@ -11,6 +11,8 @@ use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\VentaController;
+use App\Models\Venta;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,7 @@ Route::get('/cancelarusuario',function(){
 Route::resource('cliente', ClienteController::class);
 Route::resource('categoria', CategoriaController::class);
 Route::resource('producto', ProductoController::class);
+Route::resource('venta', VentaController::class);
 
 Route::resource('perfil', PerfilController::class);
 Route::get('/contraseña', [PerfilController::class,'contraseña'])->name('perfil.contraseña');
