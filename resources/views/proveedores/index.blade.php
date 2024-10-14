@@ -50,7 +50,7 @@
                                 <label class="control-label">Tipo de Documento:</label>
                                 <select class=" form-control select2 select2-hiddenaccessible selectpicker" style="width: 100%;" data-select2-id="1" tabindex="-1" ariahidden="true" id="tipodocumentoproveedor" name="tipodocumentoproveedor" data-live-search="true">
                                     <option value="0" selected>- Seleccione -</option>
-                                    
+
                                     <option value="D" @if(auth()->user()->tipodocumentoproveedor=="D") selected @endif>DNI</option>
                                     <option value="R" @if(auth()->user()->tipodocumentoproveedor=="R") selected @endif>RUC</option>
                                 </select>
@@ -58,7 +58,7 @@
                             <div class="col-6">
                                 <label class="control-label">Nro de documento:</label>
                                 <input type="text" name="nrodocumentoproveedor" id="nrodocumentoproveedor" class="form-control input_user @error('nrodocumentoproveedor') is-invalid @enderror"  placeholder="Nro de documento"  >
-                                @error('nrodocumentoproveedor') 
+                                @error('nrodocumentoproveedor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{$message}}</strong>
                                     </span>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-12">
                                 <label class="control-label">Usuario que registra:</label>
-                                
+
                                 <select name="id" id="id"  class="form-select input_user col-9">
                                     @foreach ($users as $user)
                                     <option value="{{$user->id}}"  @if($user->id == auth()->user()->id) selected @endif >{{$user->email}}</option>
@@ -93,13 +93,13 @@
                                 </select>
 
                                 {{-- <select name="id" id="id" class="form-select input_user col-9">
-                                    
+
                                     <option value="{{auth()->user()->id}}" >{{auth()->user()->email}}</option>
-                                    
+
                                 </select> --}}
                             </div>
 
-                           
+
 
                         </div>
 
@@ -117,7 +117,7 @@
                     </form>
                 </div>
             </div>
-            
+
         </div>
         <div class="col-7">
             <div class="card">
@@ -135,19 +135,6 @@
                           <th scope="col">Opciones</th>
                         </tr>
                         </thead>
-                        {{-- <tbody>
-                        @if(count($roles)<=0)
-                            <tr>
-                                <td colspan="3"><b>No hay registro</b></td>
-                            </tr>
-                        @else
-                            @foreach ($roles as $role)
-                            <tr>
-                            </tr>
-                            @endforeach
-                        @endif
-                        </tbody> --}}
-
                     </table>
 
                 </div>
@@ -192,14 +179,6 @@
                     <p class="col">Usuario que registró: </p>
                     <p id="ver_id" class="col"></p>
                 </div>
-                {{-- <div class="row">
-                    <p class="col">Fecha de registro de permiso: </p>
-                    <p id="ver_fecha_registro" class="col"></p>
-                </div>
-                <div class="row">
-                    <p class="col">Fecha de actualización de permiso: </p>
-                    <p id="ver_fecha_update" class="col"></p>
-                </div> --}}
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -213,9 +192,9 @@
 
 @section('script')
 <script>
-    //para cerrar el mensaje
+
     setTimeout(function () {
-        //selecciono el id mensaje y lo remuevo en 2000 segundos
+
         document.querySelector('#mensaje').remove();
 
     }, 6000);
@@ -282,7 +261,7 @@
                 {
                     data: 'nrodocumentoproveedor',
                     name: 'name',
-                    
+
                 },
                 {
                     data: null,
@@ -306,7 +285,7 @@
             direccionproveedor = $("#direccionproveedor").val();
 
             tipodocumentoproveedor = $('#tipodocumentoproveedor option:selected').text();
-            
+
             if (nombre == '' || cel == ''  ||  correoproveedor==''
                 || nrodocumentoproveedor =='' || direccionproveedor=='') {
                 Toast.fire({
@@ -317,7 +296,7 @@
                 return false;
             }
             if (tipodocumentoproveedor == '- Seleccione -') {
-                
+
                 Toast.fire({
                         type: 'error',
                         icon: 'error',
@@ -360,7 +339,7 @@
                 }
             });
         });
-        
+
         $('body').on('click', '.editProveedor', function() {
             var Proveedor_id_edit = $(this).data('id');//viene del data-id de la funcion index
             $.get('{{ route('proveedor.edit', ['proveedor' => ':proveedor']) }}'.replace(':proveedor', Proveedor_id_edit),
@@ -467,14 +446,14 @@
                     if(data.data.tipodocumentoproveedor=='R'){
                         $('#ver_tipodocumentoproveedor').text('RUC');
                     }
-                    
+
                     if(data.data.tipodocumentoproveedor=='D'){
                     $('#ver_tipodocumentoproveedor').text('DNI');
                     }
-                    
+
                     $('#ver_nrodocumentoproveedor').text(data.data.nrodocumentoproveedor);
                     $('#ver_direccionproveedor').text(data.data.direccionproveedor);
-                    
+
                     $('#ver_id').text(data.data2.email);
 
                     // $('#ver_fecha_registro').text(moment(data.data.created_at).format('YYYY-MM-DD HH:mm:ss'));

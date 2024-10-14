@@ -227,11 +227,18 @@
         </p>
     </a>
     <ul class="nav nav-treeview">
-
         <li class="nav-item">
-            <a href="{{ route('categoria.index') }}" class="nav-link ">
+            <a href="{{ route('compra.index') }}" class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Listado de compras</p>
+            </a>
+        </li>
+    </ul>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('compra.create') }}" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Creación de compras</p>
             </a>
         </li>
     </ul>
