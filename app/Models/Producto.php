@@ -35,4 +35,10 @@ class Producto extends Model
     {
         return $this->belongsTo(User::class, 'id_usuario');
     }
+
+    public function compras()
+{
+    return $this->hasMany(Compra::class, 'id_producto');
+}
+
 }

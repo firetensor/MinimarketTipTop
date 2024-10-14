@@ -51,9 +51,6 @@
                   @else
                   <td><center>{{ $producto->stock}}<center></td>
                   @endif
-
-                  {{-- <td>{{ $producto->stock_minimo }}</td>
-                  <td>{{ $producto->stock_maximo }}</td> --}}
                   <td>{{ $producto->precio_compra }}</td>
                   <td>{{ $producto->precio_venta }}</td>
                   <td>{{ $producto->fecha_ingreso }}</td>

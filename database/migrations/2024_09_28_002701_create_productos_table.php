@@ -24,12 +24,10 @@ return new class extends Migration
             $table->date('fecha_ingreso');
             $table->text('imagen');
             $table->timestamps();
-//claves foraneas
             $table->unsignedBigInteger('id_categoria');
             $table->unsignedBigInteger('id_usuario');
-             // Estableciendo las relaciones
-             $table->foreign('id_categoria')->references('id')->on('categorias')->onDelete('cascade');
-             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_categoria')->references('id')->on('categorias')->onDelete('cascade');
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
