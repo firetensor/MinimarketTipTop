@@ -19,6 +19,42 @@ class ProductoController extends Controller
         return view('productos.index', compact('productos'));
     }
 
+    public function buscarProducto(Request $request)
+    {
+        // Buscar el producto por código
+        $producto = Producto::where('codigo', $request->codigo)->first();
+
+        if ($producto) {
+            // Obtener la lista de productos que ya están en la sesión de compra
+            $compras = session()->get('compras', []);
+
+            // Verificar si el producto ya está en la lista de compras
+            $index = array_search($producto->codigo, array_column($compras, 'codigo'));
+
+            if ($index !== false) {
+                // Si el producto ya existe, sumar la cantidad
+                $compras[$index]['cantidad'] += $request->cantidad;
+            } else {
+                // Si no existe, agregar el nuevo producto con su cantidad
+                $compras[] = [
+                    'codigo' => $producto->codigo,
+                    'nombre' => $producto->nombre_producto,
+                    'cantidad' => $request->cantidad,
+                    'costo' => $producto->precio_compra,
+                    'total' => $producto->precio_compra * $request->cantidad,
+                ];
+            }
+
+            // Actualizar la sesión con la nueva lista de productos
+            session()->put('compras', $compras);
+
+            return response()->json(['success' => true, 'compras' => $compras]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Producto no encontrado']);
+        }
+    }
+
+
 
 
 
@@ -74,8 +110,7 @@ return redirect()->route('producto.index')->with('success', 'Producto guardado c
     public function create()
     {
         // Generar un código único para el nuevo producto
-        $ultimoProducto = Producto::latest()->first();
-        $nuevoCodigo = 'PROD-' . str_pad(($ultimoProducto ? $ultimoProducto->id + 1 : 1), 5, '0', STR_PAD_LEFT);
+
 
         // Recupera todas las categorías
         $categorias = Categoria::all();
@@ -84,7 +119,7 @@ return redirect()->route('producto.index')->with('success', 'Producto guardado c
         $usuario = Auth::user();
 
         // Pasar el código generado, las categorías y el usuario a la vista
-        return view('productos.create', compact('nuevoCodigo', 'categorias', 'usuario'));
+        return view('productos.create', compact('categorias', 'usuario'));
     }
 
     public function edit($id)
