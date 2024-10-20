@@ -38,7 +38,7 @@ class Producto extends Model
 
     public function compras()
 {
-    return $this->hasMany(Compra::class, 'id_producto');
+    return $this->hasMany(Compra::class);
 }
 
 }

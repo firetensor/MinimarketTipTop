@@ -29,7 +29,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Código:</label>
-                                                        <input type="text" class="form-control" name="codigo" value="{{ $nuevoCodigo }}">
+                                                        <input type="text" class="form-control" name="codigo">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
