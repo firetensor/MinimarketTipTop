@@ -77,20 +77,21 @@ class CompraController extends Controller
             ->with('icono', 'success');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Compra $compra)
+    public function show($id)
     {
-        //
+        $compra = Compra::with('detalles', 'proveedor')->findOrFail($id);
+        return view('compras.show', compact('compra'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Compra $compra)
+    public function edit($id)
     {
-        //
+        $compra = Compra::with('detalles', 'proveedor')->findOrFail($id);
+        $proveedores = Proveedor::all();
+        $productos = Producto::all();
+        return view('compras.edit', compact('compra', 'proveedores', 'productos'));
     }
 
     /**

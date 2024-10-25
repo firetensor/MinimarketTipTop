@@ -46,8 +46,8 @@
                   <td>
                     <center>
                         <div class="btn-group">
-                            <a href="" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                            <a href="" class="btn btn-success">
+                            <a href="{{ route('compra.show', $compra->id) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('compra.edit', $compra->id) }}" class="btn btn-success">
                                 <i class="fa fa-pencil-alt"></i>
                             </a>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $compra->id }}"><i class="fa fa-trash"></i></button>

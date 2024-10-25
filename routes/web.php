@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DetalleCompraController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
@@ -60,7 +61,12 @@ Route::delete('tempo/{id}', [TempoCompraController::class, 'destroy'])->name('co
 
 
 
+Route::get('compras/{id}', [CompraController::class, 'show'])->name('compra.show');
+Route::get('compras/{id}/edit', [CompraController::class, 'edit'])->name('compra.edit');
+Route::put('compras/{id}', [CompraController::class, 'update'])->name('compra.update');
 
+Route::delete('detalle/{id}', [DetalleCompraController::class, 'destroy'])->name('compra.detalle.destroy');
+Route::post('detalle/create', [DetalleCompraController::class, 'store'])->name('compra.detalle.store');
 
 
 
