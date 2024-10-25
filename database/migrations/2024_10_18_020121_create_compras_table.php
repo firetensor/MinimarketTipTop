@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('comprobante');
             $table->decimal('precio_total', 8, 2);
 
-            //$table->integer('id_proveedor');
-            //$table->foreign('id_proveedor')->references('idproveedor')->on('proveedores')->onDelete('cascade');
+            $table->integer('id_proveedor');
+            $table->foreign('id_proveedor')->references('idproveedor')->on('proveedores')->onDelete('cascade');
             $table->timestamps();
         });
     }

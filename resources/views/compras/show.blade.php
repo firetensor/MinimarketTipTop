@@ -59,7 +59,7 @@
 
                             <div class="col-md-6">
                                 <label for="">Proveedor</label>
-                                <input type="text" class="form-control" value="{{$compra->detalles->first()->proveedor->nombresproveedor}}" disabled id="id_proveedor" name="proveedor_id">
+                                <input type="text" class="form-control" value="{{$compra->proveedor->nombresproveedor}}" disabled id="id_proveedor" name="proveedor_id">
                             </div>
                         </div>
                         <hr>

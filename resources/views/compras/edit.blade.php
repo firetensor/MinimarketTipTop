@@ -190,10 +190,10 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="col-md-6">
-                                <input type="text" class="form-control" value="{{$detalle->proveedor->nombresproveedor}}" id="empresa_proveedor" disabled>
-                                <input type="text" class="form-control" id="id_proveedor" name="proveedor_id" value="{{$detalle->proveedor->idproveedor}}" hidden>
+                                <input type="text" class="form-control" value="{{$compra->proveedor->nombresproveedor}}" id="empresa_proveedor" disabled>
+                                <input type="text" class="form-control" id="id_proveedor" name="proveedor_id" value="{{$compra->proveedor->idproveedor}}" hidden>
                             </div>
 
                         <hr>

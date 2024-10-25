@@ -54,10 +54,10 @@ class DetalleCompraController extends Controller
                 } else {
                     $detalle_compra = new DetalleCompra();
                     $detalle_compra->cantidad = $request->cantidad;
-                    $detalle_compra->precio_compra = $producto->precio_compra;
+                    //$detalle_compra->precio_compra = $producto->precio_compra;
                     $detalle_compra->id_compra = $compra_id;
                     $detalle_compra->id_producto = $producto->id;
-                    $detalle_compra->id_proveedor = $request->id_proveedor;
+                    //$detalle_compra->id_proveedor = $request->id_proveedor;
                     $detalle_compra->save();
                     return response()->json(['success' => true, 'message' => 'El producto fue encontrado']);
                 }
