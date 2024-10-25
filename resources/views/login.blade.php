@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta charset="utf-8">
-    <title>Acceso al Sistema :: MTC</title>
+    <title>Acceso al Sistema :: TipTop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -86,7 +86,7 @@
                                     <input type="text" name="email" placeholder="Usuario" id="email"
                                         class="form-control @error('email') is-invalid @enderror login-form-field" value="{{old('email')}}" required tabindex="1" />
                                     <input type="hidden" name="user"  value="1" />
-                                    @error('email') 
+                                    @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{$message}}</strong>
                                     </span>
@@ -98,7 +98,7 @@
                                 <div class="controls">
                                     <input type="password"  class="form-control @error('password') is-invalid @enderror login-form-field" value="{{old('password')}}" id="password"
                                         name="password" placeholder="Credenciales" required tabindex="2" />
-                                        @error('password') 
+                                        @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{$message}}</strong>
                                         </span>
@@ -167,7 +167,7 @@
                 showConfirmButton: false,
                 timer: 3000
             });
-            
+
             $('#saveBtn').click(function(e) {
                 e.preventDefault();
 
@@ -190,7 +190,7 @@
                         Toast.fire({
                             type: 'error',
                             title: 'Credenciales incorrectas'
-                            
+
                         })
                     }
                 });

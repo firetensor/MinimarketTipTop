@@ -65,6 +65,8 @@ Route::get('compras/{id}', [CompraController::class, 'show'])->name('compra.show
 Route::get('compras/{id}/edit', [CompraController::class, 'edit'])->name('compra.edit');
 Route::put('compras/{id}', [CompraController::class, 'update'])->name('compra.update');
 
+Route::delete('compras/{id}', [CompraController::class, 'destroy'])->name('compra.destroy');
+
 Route::delete('detalle/{id}', [DetalleCompraController::class, 'destroy'])->name('compra.detalle.destroy');
 Route::post('detalle/create', [DetalleCompraController::class, 'store'])->name('compra.detalle.store');
 
