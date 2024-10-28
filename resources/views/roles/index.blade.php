@@ -23,7 +23,7 @@
               <h5 class="card-title">CREAR ROL</h5>
               <p class="card-text"></p>
                 <form id="RoleForm" name="RoleForm" action="{{--route('role.store')--}}">
-                @csrf
+                    @csrf
         
                     <div class="form-group row">
                         <div class="col-12">

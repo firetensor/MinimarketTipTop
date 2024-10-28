@@ -14,7 +14,7 @@ class ProductoController extends Controller
     {
         // Recupera todas las categorías
         $productos = Producto::all();
-        $productos = Producto::with(['categoria', 'user'])->get();
+        $productos = Producto::with(['categoria', 'user'])->where('estadoproducto','=',1)->get();
         // Pasa las categorías a la vista
         return view('productos.index', compact('productos'));
     }
@@ -90,6 +90,8 @@ class ProductoController extends Controller
         $producto->fecha_ingreso = $request->fecha_ingreso;
         $producto->id_categoria = $request->id_categoria;
         $producto->id_usuario = $request->id_usuario;
+        $producto->estadoproducto = 1;
+
 
  // Guardar la imagen si se proporciona
  if ($request->hasFile('imagen')) {
@@ -192,7 +194,9 @@ return redirect()->route('producto.index')->with('success', 'Producto guardado c
 public function destroy($id)
 {
     $producto = Producto::findOrFail($id);
-    $producto->delete();
+    //$producto->delete();
+    $producto->estadoproducto = 0;
+        $producto->save();
 
     return redirect()->route('producto.index')->with('success', 'Cliente eliminado con éxito.');
 }

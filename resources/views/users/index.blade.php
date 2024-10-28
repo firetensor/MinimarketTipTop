@@ -91,142 +91,142 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">LISTA DE USUARIOS</h5>
-              <p class="card-text">
+              <p class="card-text"></p>
                 
                 <table class="table table-striped nowrap" id="table-users" name="table-users">
-                <thead style="background-color:#1C91EC;color: #fff;">
+                    <thead style="background-color:#1C91EC;color: #fff;">
                     <tr>
                       <th scope="col">N°</th>
                       <th scope="col">Nombre</th>
                       <th scope="col">Opciones</th>
                     </tr>
-                  </thead>
-                  {{-- <tbody>
-                    @if(count($usuarios)<=0)
-                        <tr>
-                            <td colspan="3"><b>No hay registro</b></td>
-                        </tr>
-                    @else
-                        @foreach ($usuarios as $usuario)
-                        <tr>
-                            <td>{{$usuario->id}} </td>
-                            <td>{{$usuario->name}}</td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{$usuario->id}}">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </button>
-                                
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                        <p>id de usuario: {{$usuario->id}}</p>
-                                        <p>Nombre de usuario: {{$usuario->name}}</p>
-                                        <p>Email de usuario: {{$usuario->email}}</p>
-                                        <p>Fecha de registro de usuario: {{$usuario->created_at}}</p>
-                                        <p>Fecha de actualización de usuario: {{$usuario->updated_at}}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                 <a href="{{route('usuario.edit',$usuario->id)}} " class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
-                                  
-                                <!-- Botón del primer modal -->
-                                {{-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal3{{$usuario->id}}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                
-                                <!-- Primer Modal -->
-                                <div class="modal fade" id="exampleModal3{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-                                    <div class="modal-dialog modalperrito">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel3">Editar Usuario {{$usuario->id}}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                        <!-- Contenido del cuerpo del modal -->
-                                        <p>Aquí puedes agregar el formulario de edición del usuario {{$usuario->id}}</p>
-                                        <form action="{{route('usuario.update',$usuario->id)}}" method="post">
-                                            @method('put')
-                                            @csrf
-                                    
-                                                <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label class="control-label">Nombre:</label>
-                                                        <input type="text" name="name" class="form-control input_user @error('name') is-invalid @enderror" value="{{$usuario->name}}"  placeholder="Nombre" required>
-                                                        @error('name') 
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{$message}}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label class="control-label">Email:</label>
-                                                        <input type="email" name="email" class="form-control input_user "  placeholder="email" value="{{$usuario->email}}" readonly required>
-                                                        
-                                                    </div>
+                    </thead>
+                        {{-- <tbody>
+                            @if(count($usuarios)<=0)
+                                <tr>
+                                    <td colspan="3"><b>No hay registro</b></td>
+                                </tr>
+                            @else
+                                @foreach ($usuarios as $usuario)
+                                <tr>
+                                    <td>{{$usuario->id}} </td>
+                                    <td>{{$usuario->name}}</td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{$usuario->id}}">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </button>
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <p>id de usuario: {{$usuario->id}}</p>
+                                                <p>Nombre de usuario: {{$usuario->name}}</p>
+                                                <p>Email de usuario: {{$usuario->email}}</p>
+                                                <p>Fecha de registro de usuario: {{$usuario->created_at}}</p>
+                                                <p>Fecha de actualización de usuario: {{$usuario->updated_at}}</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <!-- Botones de acción del modal -->
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                                  </div>
-                                            </form>
-                                    
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    </div>
-                                </div> --}}
-                                {{--
-                                <!--Boton del Segundo Modal-->
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal2{{$usuario->id}}">
-                                    <i class="fas fa-trash"></i>
-                                  </button>
-                                  <!--Segundo  Modal -->
-                                  <div class="modal fade" id="exampleModal2{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-                                    <div class="modal-dialog modalperrito" >
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">{{$usuario->id}}</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <a href="{{route('usuario.edit',$usuario->id)}} " class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                        
+                                        <!-- Botón del primer modal -->
+                                        {{-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal3{{$usuario->id}}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        
+                                        <!-- Primer Modal -->
+                                        <div class="modal fade" id="exampleModal3{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                                            <div class="modal-dialog modalperrito">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel3">Editar Usuario {{$usuario->id}}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <!-- Contenido del cuerpo del modal -->
+                                                <p>Aquí puedes agregar el formulario de edición del usuario {{$usuario->id}}</p>
+                                                <form action="{{route('usuario.update',$usuario->id)}}" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                            
+                                                        <div class="form-group row">
+                                                            <div class="col-12">
+                                                                <label class="control-label">Nombre:</label>
+                                                                <input type="text" name="name" class="form-control input_user @error('name') is-invalid @enderror" value="{{$usuario->name}}"  placeholder="Nombre" required>
+                                                                @error('name') 
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{$message}}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label class="control-label">Email:</label>
+                                                                <input type="email" name="email" class="form-control input_user "  placeholder="email" value="{{$usuario->email}}" readonly required>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <!-- Botones de acción del modal -->
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                                        </div>
+                                                    </form>
+                                            
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div> --}}
+                                        {{--
+                                        <!--Boton del Segundo Modal-->
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal2{{$usuario->id}}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <!--Segundo  Modal -->
+                                        <div class="modal fade" id="exampleModal2{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                                            <div class="modal-dialog modalperrito" >
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">{{$usuario->id}}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <p>
+                                                    ¿Está seguro de eliminar al usuario: {{$usuario->name}}?
+                                                </p>
+                                                <p>Correo: {{$usuario->email}}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{route('usuario.destroy',$usuario->id)}}" method="post">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger"><i class="fas fa-check-square"></i>SI</button>
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i>No</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-                                          <p>
-                                            ¿Está seguro de eliminar al usuario: {{$usuario->name}}?
-                                          </p>
-                                          <p>Correo: {{$usuario->email}}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <form action="{{route('usuario.destroy',$usuario->id)}}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger"><i class="fas fa-check-square"></i>SI</button>
-                                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-times-circle"></i>No</button>
-                                              </form>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    @endif
-                </tbody> --}}
-                <tbody>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
+                        </tbody> --}}   
+                    <tbody>
 
-                </tbody>
+                    </tbody>
                 
-            </table>
+                </table>
             {{--$usuarios->links()--}}
             </div>
           </div>

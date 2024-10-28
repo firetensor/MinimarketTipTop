@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Producto extends Model
 {
@@ -24,6 +25,7 @@ class Producto extends Model
         'precio_venta',
         'fecha_ingreso',
         'id_usuario', // Si es relevante
+        'estadoproducto'
     ];
 
     public function categoria()
@@ -34,6 +36,20 @@ class Producto extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    public static function DisminuirStockProducto($idproducto,$cantidad){
+        // return DB::update(
+        //     DB::raw("UPDATE productos SET stock = stock - ? WHERE id = ?"), 
+        //     [$cantidad, $idproducto]
+        // );
+        // Asegúrate de utilizar DB::update() y no DB::select()
+        return DB::update("UPDATE productos SET stock = stock - ? WHERE id = ?", [$cantidad, $idproducto]);
+    }
+    public static function AumentarStocklibro($LibroID,$Nrocopiaslibro){
+        return DB::select(
+        DB::raw("UPDATE libro set Stocklibro = Stocklibro + '".$Nrocopiaslibro."' where LibroID='".$LibroID."'")
+        );
     }
 
     public function compras()

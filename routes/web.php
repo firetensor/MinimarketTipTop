@@ -42,6 +42,14 @@ Route::resource('categoria', CategoriaController::class);
 Route::resource('producto', ProductoController::class);
 
 Route::resource('venta', VentaController::class);
+Route::get('/cargar-clientes', [VentaController::class, 'cargarClientes'])->name('cargar.clientes');
+Route::get('/cargar-productos', [VentaController::class, 'cargarProductos'])->name('cargar.productos');
+
+Route::get('/productoseleccionado/{producto}', [VentaController::class, 'verproductoseleccionado'])->name('venta.verproductoseleccionado');
+Route::get('/boleta/{id}',[VentaController::class,'boleta'])->name('venta.boleta');
+Route::post('agregarcliente', [VentaController::class, 'agregarcliente'])->name('venta.cliente');
+Route::get('/verventa/{id}',[VentaController::class,'show2'])->name('venta.show2');
+
 
 Route::resource('perfil', PerfilController::class);
 Route::get('/contraseña', [PerfilController::class,'contraseña'])->name('perfil.contraseña');

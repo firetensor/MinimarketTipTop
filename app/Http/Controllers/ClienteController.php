@@ -9,7 +9,8 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::all();
+        //$clientes = Cliente::all();
+        $clientes = Cliente::where('estadocliente','=',1)->get();
         return view('clientes.index', compact('clientes'));
     }
 
@@ -29,6 +30,7 @@ class ClienteController extends Controller
         'dni_ruc' => $request->dni_ruc,
         'telefono' => $request->telefono,
         'email' => $request->email,
+        'estadocliente' => '1',
     ]);
 
     // Redirigir de nuevo al listado de clientes con un mensaje de éxito
@@ -50,7 +52,9 @@ public function update(Request $request, $id)
 public function destroy($id)
 {
     $cliente = Cliente::findOrFail($id);
-    $cliente->delete();
+    //$cliente->delete();
+    $cliente->estadocliente = 0;
+        $cliente->save();
 
     return redirect()->route('cliente.index')->with('success', 'Cliente eliminado con éxito.');
 }
