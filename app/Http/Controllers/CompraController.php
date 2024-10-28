@@ -17,6 +17,7 @@ class CompraController extends Controller
      */
     public function index()
     {
+        
         $compras = Compra::with('detalles.producto')->get();
         return view('compras.index', compact('compras'));
     }
@@ -52,6 +53,7 @@ class CompraController extends Controller
         $compra->fecha=$request->fecha;
         $compra->comprobante = $request->comprobante;
         $compra->precio_total = $request->precio_total;
+        $compra->id_proveedor = $request->proveedor_id;
         $compra->save();
 
         $tempo_compras = TempoCompra::where('session_id', $session_id)->get();
@@ -60,10 +62,10 @@ class CompraController extends Controller
             $producto =Producto::where('id', $tempo_compra->id_producto)->first();
             $detalle_compra = new detalleCompra();
             $detalle_compra->cantidad = $tempo_compra->cantidad;
-            $detalle_compra->precio_compra = $producto->precio_compra;
+            //$detalle_compra->precio_compra = $producto->precio_compra;
             $detalle_compra->id_compra = $compra->id;
             $detalle_compra->id_producto = $tempo_compra->id_producto;
-            $detalle_compra->id_proveedor = $request->proveedor_id;
+            //$detalle_compra->id_proveedor = $request->proveedor_id;
             $detalle_compra->save();
 
             $producto->stock += $tempo_compra->cantidad;
@@ -77,37 +79,72 @@ class CompraController extends Controller
             ->with('icono', 'success');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Compra $compra)
+    public function show($id)
     {
-        //
+        $compra = Compra::with('detalles', 'proveedor')->findOrFail($id);
+        return view('compras.show', compact('compra'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Compra $compra)
+    public function edit($id)
     {
-        //
+        $compra = Compra::with('detalles', 'proveedor')->findOrFail($id);
+        $proveedores = Proveedor::all();
+        $productos = Producto::all();
+        return view('compras.edit', compact('compra', 'proveedores', 'productos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Compra $compra)
+    public function update(Request $request, Compra $compra, $id)
     {
-        //
+        //$datos = request()->all();
+       // return response()->json($datos);
+
+       $request->validate([
+        'fecha'=>'required',
+        'comprobante'=>'required',
+        'precio_total'=>'required',
+    ]);
+
+
+
+    $compra = Compra::find($id);
+    $compra->fecha=$request->fecha;
+    $compra->comprobante = $request->comprobante;
+    $compra->precio_total = $request->precio_total;
+    $compra->id_proveedor = $request->proveedor_id;
+    $compra->save();
+
+    return redirect()->route('compra.index')
+    ->with('mensaje', 'Se actualizó de manera correcta')
+    ->with('icono', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Compra $compra)
+    public function destroy($id)
     {
-        //
+        $compra = Compra::find($id);
+
+        foreach($compra->detalles as $detalle){
+            $producto =Producto::find($detalle->id_producto);
+            $producto->stock-=$detalle->cantidad;
+            $producto->save();
+        }
+
+        $compra->detalles()->delete();
+        $compra->destroy($id);
+
+        return redirect()->route('compra.index')
+        ->with('mensaje', 'Se eliminó de manera correcta')
+        ->with('icono', 'success');
     }
+
 
 
 }

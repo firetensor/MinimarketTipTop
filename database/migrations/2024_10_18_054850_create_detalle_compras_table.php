@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('detalle_compras', function (Blueprint $table) {
             $table->id();
             $table->integer('cantidad');
-            $table->decimal('precio_compra', 8, 2);
+            //$table->decimal('precio_compra', 8, 2);
             $table->unsignedBigInteger('id_compra');
             $table->foreign('id_compra')->references('id')->on('compras')->onDelete('cascade');
             $table->unsignedBigInteger('id_producto');
             $table->foreign('id_producto')->references('id')->on('productos')->onDelete('cascade');
-            $table->integer('id_proveedor');
-            $table->foreign('id_proveedor')->references('idproveedor')->on('proveedores')->onDelete('cascade');
+            //$table->integer('id_proveedor');
+            //$table->foreign('id_proveedor')->references('idproveedor')->on('proveedores')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,9 +13,9 @@ class detalleCompra extends Model
         return $this->belongsTo(Compra::class, 'id_compra');
     }
 
-    public function proveedor(){
-        return $this->belongsTo(Proveedor::class);
-    }
+    /*public function proveedor(){
+        return $this->belongsTo(Proveedor::class, 'id_proveedor');
+    }*/
 
     public function producto(){
         return $this->belongsTo(Producto::class,'id_producto');

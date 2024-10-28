@@ -39,15 +39,15 @@
                   <td>
                     <ul>
                         @foreach ($compra->detalles as $detalle )
-                            <li>{{$detalle->producto->nombre_producto.' - '.$detalle->cantidad.'unidades.'}}</li>
+                            <li>{{$detalle->producto->nombre_producto.' - '.$detalle->cantidad.' unidades.'}}</li>
                         @endforeach
                     </ul>
                   </td>
                   <td>
                     <center>
                         <div class="btn-group">
-                            <a href="" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                            <a href="" class="btn btn-success">
+                            <a href="{{ route('compra.show', $compra->id) }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('compra.edit', $compra->id) }}" class="btn btn-success">
                                 <i class="fa fa-pencil-alt"></i>
                             </a>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $compra->id }}"><i class="fa fa-trash"></i></button>
@@ -67,11 +67,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <form action="" method="POST" style="display:inline;">
+                            <form action="{{ route('compra.destroy', $compra->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
+
                         </div>
                     </div>
                 </div>
