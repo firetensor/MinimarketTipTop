@@ -17,7 +17,7 @@
             </div>
         @endif
     </div>
-    
+
     <form action="{{--route('venta.store')--}}" method="post">
         @csrf
         <div class="row form-group">
@@ -45,7 +45,7 @@
                                     <label class="control-label">Cliente:</label>
                                     <div class="row">
                                         <div class="col-7">
-                                            
+
                                             <a href="" name="buscarcliente" type="button" id="buscarcliente" class="btn btn-primary"><i class="fas fa-search"></i>cliente</a>
                                         </div>
                                         <div class="col-5">
@@ -73,7 +73,7 @@
                         <div class="card">
                             <div class="card-body row">
                                 <h5 class="card-title">Datos de producto</h5>
-                                
+
                                 <div class="col-5">
                                     <label class="control-label">Producto:</label><br>
                                     <a href="" name="buscarproducto" type="button" id="buscarproducto" class="btn btn-primary"><i class="fas fa-search"></i>producto</a>
@@ -146,7 +146,7 @@
                                 <label for="">Operaciones gravadas : </label>
                             </div>
                             <div class="col-md-2">
-                                
+
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control text-right" name="opgravadas" id="opgravadas" readonly="readonly">
@@ -157,7 +157,7 @@
                                 <label for="">Operaciones exoneradas: </label>
                             </div>
                             <div class="col-md-2">
-                                
+
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control text-right" name="opexoneradas" id="opexoneradas" readonly="readonly">
@@ -168,7 +168,7 @@
                                 <label for="">IGV: </label>
                             </div>
                             <div class="col-md-2">
-                                
+
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control text-right" name="igvtotal" id="igvtotal" readonly="readonly">
@@ -179,7 +179,7 @@
                                 <label for="">Total venta: </label>
                             </div>
                             <div class="col-md-2">
-                                
+
                             </div>
                             <div class="col-md-2">
                                 <input type="text" class="form-control text-right" name="totalventa" id="totalventa" readonly="readonly">
@@ -191,7 +191,7 @@
                                     <div class="col-md-8">
                                         <label for="">Pago: </label>
                                     </div>
-                                    
+
                                     <div class="col-md-4">
                                         <input type="text" class="form-control text-right" name="pago" id="pago" >
                                     </div>
@@ -202,29 +202,29 @@
                                     <div class="col-md-8">
                                         <label for="">Vuelto: </label>
                                     </div>
-                                    
+
                                     <div class="col-md-4">
                                         <input type="text" class="form-control text-right" name="vuelto" id="vuelto" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
-                <div class="col-md-12 text-center"> 
+                <div class="col-md-12 text-center">
                     <div id="guardar">
                         <div class="form-group">
                             <button class="btn btn-primary" id="btnRegistrar" data-loading-text="<i class='fa a-spinner fa-spin'> </i> Registrando">
-                            <i class='fas fa-save'></i> Registrar</button> 
-                            
-                            <a href="{{--route('prestamo.cancelar')--}}" class='btn btn-danger'><i class='fas fa-ban'></i> Cancelar</a> 
-                        </div> 
+                            <i class='fas fa-save'></i> Registrar</button>
+
+                            <a href="{{--route('prestamo.cancelar')--}}" class='btn btn-danger'><i class='fas fa-ban'></i> Cancelar</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </form>
     <!-- Modal buscar cliente-->
@@ -246,11 +246,11 @@
                         <th scope="col">Opciones</th>
                         </tr>
                     </thead>
-                        
+
                     <tbody>
 
                     </tbody>
-                
+
                 </table>
                 </div>
             </div>
@@ -281,11 +281,11 @@
                         <th scope="col">Opciones</th>
                         </tr>
                     </thead>
-                        
+
                     <tbody>
 
                     </tbody>
-                
+
                 </table>
                 </div>
             </div>
@@ -311,7 +311,7 @@
                         <div class="col-12">
                             <label class="control-label">Nombre:</label>
                             <input type="text" name="name" id="name" class="form-control"  placeholder="Nombre" required>
-                            
+
                         </div>
                     </div> --}}
                     <div class="row">
@@ -355,7 +355,7 @@
     setTimeout(function () {
         //selecciono el id mensaje y lo remuevo en 2000 segundos
         document.querySelector('#mensaje').remove();
-        
+
     }, 2000);
 </script>
 <script>
@@ -419,9 +419,9 @@
 
         $('#buscarcliente').click(function(e) {
             e.preventDefault();
-            
+
             $('#modalCliente').modal('show');
-            
+
         });
 
         $('body').on('click', '.seleccionarcliente', function() {
@@ -434,14 +434,14 @@
                     $('#dni_ruc').val(data.data.dni_ruc);
                     $('#email').val(data.data.email);
 
-                    $('#modalCliente').modal('hide'); 
+                    $('#modalCliente').modal('hide');
                 })
         });
 
         $('#buscarproducto').click(function(e) {
             e.preventDefault();
             $('#modalProducto').modal('show');
-            
+
         });
 
         var table = $('#table-productos').DataTable({
@@ -503,7 +503,7 @@
                     $('#stock').val(data.data.stock);
                     $('#precio_venta').val(data.data.precio_venta);
 
-                    $('#modalProducto').modal('hide'); 
+                    $('#modalProducto').modal('hide');
                 })
         });
 
@@ -577,7 +577,7 @@
                         '<input type="number" class="form-control cantidad-detalle cantidad-input" value="' + cantidad + '" min="1">',
                         precio_venta.toFixed(2),
                         subtotal.toFixed(2)
-                        
+
                     ]).draw(false).node();
 
                     actualizarTotal();
@@ -593,7 +593,7 @@
                             $(this).val(cantidad); // Restaurar la cantidad anterior
                             return;
                         }
-                        
+
                         // Actualizar subtotal
                         var nuevoSubtotal = nuevaCantidad * precio_venta;
                         //tableDetalles.cell($(this).closest('td').next('td')).data(nuevoSubtotal).draw();
@@ -602,7 +602,7 @@
                         actualizarTotal();
 
                     });
-                    
+
                     // Limpiar los campos de entrada
                     $('#codigo').val('');
                     $('#nombre_producto').val('');
@@ -616,7 +616,7 @@
                 mostrarMensajeError("Por favor, complete todos los campos antes de agregar un producto");
                 return false;
             }
-            
+
         });
 
         // Evento para eliminar una fila de la tabla
@@ -634,7 +634,7 @@
         // $('#table-detalles tbody').on('input', '.cantidad-detalle', function() {
         //     // Obtener la fila actual
         //     var $fila = $(this).closest('tr');
-            
+
         //     // Obtener el precio de venta y la cantidad
         //     var precioVenta = parseFloat($fila.find('.precio-venta').text());
         //     var cantidad = parseInt($(this).val());
@@ -664,12 +664,12 @@
                 var subtotal = parseFloat($(this).find('td:eq(6)').text());
                 var cantidad = parseFloat($(this).find('input.cantidad-input').val());
                 total += subtotal;
-                
+
                 var precioventaunidad=parseFloat($(this).find('td:eq(5)').text());
                 preciosinigv = precioventaunidad/1.18;
                 preciototalsinigv=preciosinigv*cantidad;
                 subtotalsinigv +=preciototalsinigv;
-                
+
 
                 //actualizar igv
                 igvproducto = subtotal-preciototalsinigv;
@@ -836,7 +836,7 @@
         $('#añadircliente').click(function(e) {
             e.preventDefault();
             $('#modalAñadirCliente').modal('show');
-            
+
         });
 
         $('#btnguardarcliente').click(function(e) {
@@ -864,7 +864,7 @@
                         title: data.success
                     })
                     $('#ClienteForm').trigger("reset");
-                    $('#modalAñadirCliente').modal('hide'); 
+                    $('#modalAñadirCliente').modal('hide');
                     // Recargar la tabla DataTable en el modal de buscar cliente
                     tablecli.draw();
                 },
@@ -872,7 +872,7 @@
                 //     console.log('Error:', data);
                 //     Toast.fire({
                 //         type: 'error',
-                //         title: 'Cliente fallo al Registrarse.' 
+                //         title: 'Cliente fallo al Registrarse.'
                 //     })
                 // }
                 error: function(xhr, status, error) {

@@ -40,7 +40,7 @@ class Producto extends Model
 
     public static function DisminuirStockProducto($idproducto,$cantidad){
         // return DB::update(
-        //     DB::raw("UPDATE productos SET stock = stock - ? WHERE id = ?"), 
+        //     DB::raw("UPDATE productos SET stock = stock - ? WHERE id = ?"),
         //     [$cantidad, $idproducto]
         // );
         // Asegúrate de utilizar DB::update() y no DB::select()
@@ -53,8 +53,12 @@ class Producto extends Model
     }
 
     public function compras()
-{
+    {
     return $this->hasMany(Compra::class);
-}
+    }
 
+    public function ordens()
+    {
+    return $this->hasMany(Orden::class);
+    }
 }

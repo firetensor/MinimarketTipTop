@@ -5,10 +5,10 @@
     <div class="col-md-12">
         <div class="card card-outline card-primary">
 <div class="card-header">
-            <h1>Ingrese los datos</h1>
+            <h1>Ingrese los datos de la orden de compra</h1>
         </div>
         <div class="card-body">
-            <form action="{{route('compra.store')}}" method="post" id="form_compra">
+            <form action="{{route('orden.store')}}" method="post" id="form_orden">
                 @csrf
                 <div class="row">
                     <div class="col-md-8">
@@ -33,7 +33,7 @@
                                     <div style="height: 32px"></div>
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#modal-buscar_producto"><i class="fas fa-search"></i></button>
-                                    
+
                                     <div class="modal fade" id="modal-buscar_producto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -112,32 +112,38 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-productos"> <!-- Cambié aquí para que sea más fácil agregar filas -->
-                                    <?php $cont = 1; $total_cantidad=0; $total_compra=0; ?>
-                                    @foreach ($tempo_compras as $tempo_compra)
+                                    <?php $cont = 1; $total_cantidad=0; $total_compra=0?>
+                                    @foreach ($tempo_ordens as $tempo_orden)
 
                                     <tr>
                                         <td style="text-align: center">{{$cont++}}</td>
-                                        <td style="text-align: center">{{$tempo_compra->producto->codigo}}</td>
-                                        <td style="text-align: center">{{$tempo_compra->cantidad}}</td>
-                                        <td >{{$tempo_compra->producto->nombre_producto}}</td>
-                                        <td style="text-align: center">{{$tempo_compra->producto->precio_compra}}</td>
-                                        <td style="text-align: center">{{$costo = $tempo_compra->cantidad*$tempo_compra->producto->precio_compra}}</td>
+                                        <td style="text-align: center">{{$tempo_orden->producto->codigo}}</td>
+                                        <td style="text-align: center">{{$tempo_orden->cantidad}}</td>
+                                        <td >{{$tempo_orden->producto->nombre_producto}}</td>
+                                        <td style="text-align: center">{{number_format(($tempo_orden->producto->precio_compra)/1.18,2)}}</td>
+                                        <td style="text-align: center">{{number_format($costo = ($tempo_orden->cantidad*$tempo_orden->producto->precio_compra)/1.18,2)}}</td>
                                         <td>
-                                            <button class="btn btn-danger btn-sm" onclick="eliminarProducto({{ $tempo_compra->id }})"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger btn-sm" onclick="eliminarProducto({{ $tempo_orden->id }})"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @php
-                                    $total_cantidad += $tempo_compra->cantidad;
+                                    $total_cantidad += $tempo_orden->cantidad;
                                     $total_compra += $costo;
                                     @endphp
                                     @endforeach
                                 </tbody>
                                 <tfooter>
                                     <tr>
-                                        <td colspan="2" style="text-align: right"><b>Total cantidad</b></td>
-                                        <td style="text-align: center"><b>{{$total_cantidad}}</b></td>
-                                        <td colspan="2" style="text-align: right"><b></b></td>
-                                        <td style="text-align: center"><b>{{$total_compra}}</b></td>
+                                        <td colspan="5" style="text-align: right"><b>Sub Total</b></td>
+                                        <td style="text-align: center"><b>{{number_format($total_compra,2)}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: right"><b>IGV (18%)</b></td>
+                                        <td style="text-align: center"><b>{{number_format($total_compra*0.18,2) }}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: right"><b>Total</b></td>
+                                        <td style="text-align: center"><b>{{number_format(($total_compra*0.18)+$total_compra,2) }}</b></td>
                                     </tr>
                                 </tfooter>
                             </table>
@@ -199,20 +205,50 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="fecha">Fecha de compra</label><b>*</b>
+                                <label for="fecha">Fecha</label>
                                 <input type="date" class="form-control" value="{{old('fecha')}}" name="fecha" >
                             </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="fecha">Comprobante</label><b>*</b>
+                                <label for="fecha">N° de orden</label>
                                 <input type="text" class="form-control" value="{{old('comprobante')}}" name="comprobante" >
                             </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="precio_total">Precio total</label><b>*</b>
-                                <input type="text" class="form-control" style="text-align: center; background-color:rgb(136, 209, 112)" value="{{$total_compra}}" name="precio_total" >
+                                <label for="fecha">Estado</label>
+                                <select class="form-control" name="estado">
+                                    @foreach($estados as $estado)
+                                        <option value="{{ $estado }}" {{ old('estado') == $estado ? 'selected' : '' }}>{{ $estado }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label for="fecha">Usuario</label>
+                                <input type="text" class="form-control" value="{{ $usuario->name }}" name="usuario" disabled>
+                                <input type="hidden" name="id_usuario" value="{{ $usuario->id}}">
+                            </div>
+                            </div>
+
+                            <div class="col-md-12" hidden>
+                                <div class="form-group">
+                                <label for="precio_total">Sub total</label>
+                                <input type="text" class="form-control" style="text-align: center; background-color:rgb(136, 209, 112)" value="{{number_format($total_compra,2)}}" name="subtotal">
+                            </div>
+                            </div>
+                            <div class="col-md-12" hidden>
+                                <div class="form-group">
+                                <label for="precio_total">IGV</label>
+                                <input type="text" class="form-control" style="text-align: center; background-color:rgb(136, 209, 112)" value="{{number_format($total_compra*0.18,2) }}" name="igv" >
+                            </div>
+                            </div>
+                            <div class="col-md-12" hidden>
+                                <div class="form-group">
+                                <label for="precio_total">Total</label>
+                                <input type="text" class="form-control" style="text-align: center; background-color:rgb(136, 209, 112)" value="{{number_format(($total_compra*0.18)+$total_compra,2) }}" name="precio_total" >
                             </div>
                             </div>
                         </div>
@@ -232,6 +268,22 @@
     </div>
 </div>
 </div>
+
+<script>
+    document.getElementById('descuento_porcentaje').addEventListener('input', function() {
+    let descuentoPorcentaje = parseFloat(this.value) || 0;
+    let totalCompra = parseFloat(document.getElementById('total_compra').innerText) || 0;
+
+    // Calcular descuento aplicado
+    let descuentoAplicado = (totalCompra * descuentoPorcentaje) / 100;
+    let totalConDescuento = totalCompra - descuentoAplicado;
+
+    // Actualizar el valor en la tabla
+    document.getElementById('total_descuento').innerText = descuentoAplicado.toFixed(2);
+    document.getElementById('total_con_descuento').innerText = totalConDescuento.toFixed(2);
+});
+
+</script>
 <script>
     $('.seleccionar-btn-proveedor').click(function(){
         var id_proveedor = $(this).data('id');
@@ -281,7 +333,7 @@ function eliminarProducto(id) {
 }
     $('#codigo').focus();
     // Evita que el formulario se envíe al presionar Enter en cualquier parte del formulario
-    $('#form_compra').on('keypress', function(e){
+    $('#form_orden').on('keypress', function(e){
         if(e.keyCode === 13){
             e.preventDefault();
         }
@@ -294,7 +346,7 @@ function eliminarProducto(id) {
 
             if(codigo.length > 0){
                 $.ajax({
-                    url: "{{ route('compra.tempo') }}",
+                    url: "{{ route('orden.tempo') }}",
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -389,3 +441,4 @@ function eliminarProducto(id) {
 </script>
 
 @endsection
+

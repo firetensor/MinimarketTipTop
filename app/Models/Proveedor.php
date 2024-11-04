@@ -20,8 +20,12 @@ class Proveedor extends Model
         return $this->hasOne(User::class,'id','id');
     }
     public function compras()
-{
+    {
     return $this->hasMany(Compra::class);
-}
+    }
 
+    public function ordens()
+    {
+    return $this->hasMany(Orden::class);
+    }
 }

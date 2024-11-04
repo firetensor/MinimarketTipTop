@@ -30,7 +30,7 @@ class ClienteController extends Controller
         'dni_ruc' => $request->dni_ruc,
         'telefono' => $request->telefono,
         'email' => $request->email,
-        'estadocliente' => '1',
+        'estadocliente' => 1,
     ]);
 
     // Redirigir de nuevo al listado de clientes con un mensaje de éxito

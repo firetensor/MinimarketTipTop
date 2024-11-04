@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function showlogin()
     {
-        
+
         return view('login');
     }
 
@@ -39,7 +39,7 @@ class UserController extends Controller
          }
         $email=$request->get('email');
         $query=User::where('email', '=', $email)->get();
-        
+
         if($query->count()!=0) {
             if($query[0]->estadousuario == 1)
             {
@@ -48,7 +48,7 @@ class UserController extends Controller
                 if(password_verify($password, $hashp)) {
                     //return redirect()->route('home',compact('email'));
                     //return Redirect::to('/Home');
-                    
+
                     return response()->json(['success' => 'Inicio de Sesión Exitoso.']);
                 } else {
                     // return back()->withErrors(['password'=>'Contraseña no valida'])
@@ -76,14 +76,6 @@ class UserController extends Controller
     const PAGINATION=10;
     public function index(Request $request)
     {
-        // $buscarpor=$request->get('buscarpor');
-        
-        // $usuarios=User::where('estadousuario','=',1)
-        // ->where('users.name','like','%'.$buscarpor.'%')
-        // ->orderby('id')->paginate($this::PAGINATION);
-
-        // return view('users.index', compact('usuarios','buscarpor'));
-
         if ($request->ajax()) {
 			$data = DB::table('users as u')
             ->where('u.estadousuario','=',1)
@@ -118,7 +110,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -126,13 +118,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $query=User::where('email','=',$request->get('email'))->get();
         if($query->count()!=0) //si lo encuentra, osea si no esta vacia
         {
             // return back()->withErrors(['email'=> 'Usuario ya registrado'])
             // ->withInput(request(['name','email','password','confipassword']));
-            return response()->json(['error' => 'Usuario ya registrado'], 401);                   
+            return response()->json(['error' => 'Usuario ya registrado'], 401);
         }
         else{
             $password=$request->get('password');
@@ -153,12 +145,10 @@ class UserController extends Controller
             else{
             //     return back()->withErrors(['password'=>'Las contraseñas no coinciden','confipassword'=>'Las contraseñas no coinciden'])
             // ->withInput(request(['name','email','password','confipassword']));
-                return response()->json(['error' => 'Las contraseñas no coinciden'], 401); 
-            
-            }
-            
-        }
+                return response()->json(['error' => 'Las contraseñas no coinciden'], 401);
 
+            }
+        }
     }
 
     /**
@@ -179,7 +169,7 @@ class UserController extends Controller
         $roles = Role::where('estadorol','=',1)->get();
         $usuario = User::find($id);
         $rolesAsignados = $usuario->roles;
-        
+
         return view('users.edit',compact('usuario','rolesAsignados','roles'));
     }
 
@@ -193,11 +183,10 @@ class UserController extends Controller
         ],
         [
             'name.required'=>'Ingrese nombre',
-            
+
         ]);
         $usuario =  User::find($id);
         $usuario->name = $request->name;
-        
         // Obtengo los roles seleccionados desde la solicitud
         $rolesSeleccionados = $request->input('roles');
 
@@ -211,10 +200,6 @@ class UserController extends Controller
 
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $usuario = User::find($id);
