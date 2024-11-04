@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detalleCompra;
+use App\Models\ordenDetalle;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
-class DetalleCompraController extends Controller
+class OrdenDetalleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,38 +32,37 @@ class DetalleCompraController extends Controller
         $request->validate([
             'codigo' => 'required',
             'cantidad' => 'required|integer',
-            'id_compra' => 'required|exists:compras,id',
+            'id_orden' => 'required|exists:ordens,id',
             'id_proveedor' => 'required|exists:proveedores,idproveedor',  // Aquí también cambiamos
         ]);
             $producto = Producto::where('codigo', $request->codigo)->first();
-            $compra_id = $request->id_compra;
+            $orden_id = $request->id_orden;
             if ($producto) {
-                $detalle_compra_existe = DetalleCompra::where('id_producto', $producto->id)
-                    ->where('id_compra', $compra_id)
+                $detalle_orden_existe = OrdenDetalle::where('id_producto', $producto->id)
+                    ->where('id_orden', $orden_id)
                     ->first();
 
-                if ($detalle_compra_existe) {
-                    $detalle_compra_existe->cantidad += $request->cantidad;
-                    $detalle_compra_existe->save();
+                if ($detalle_orden_existe) {
+                    $detalle_orden_existe->cantidad += $request->cantidad;
+                    $detalle_orden_existe->save();
                     return response()->json(['success' => true, 'message' => 'El producto fue encontrado']);
                 } else {
-                    $detalle_compra = new DetalleCompra();
-                    $detalle_compra->cantidad = $request->cantidad;
-                    $detalle_compra->id_compra = $compra_id;
-                    $detalle_compra->id_producto = $producto->id;
-                    $detalle_compra->save();
+                    $detalle_orden = new OrdenDetalle();
+                    $detalle_orden->cantidad = $request->cantidad;
+                    $detalle_orden->id_orden = $orden_id;
+                    $detalle_orden->id_producto = $producto->id;
+                    $detalle_orden->save();
                     return response()->json(['success' => true, 'message' => 'El producto fue encontrado']);
                 }
             } else {
                 return response()->json(['success' => false, 'message' => 'Producto no encontrado']);
             }
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(detalleCompra $detalleCompra)
+    public function show(ordenDetalle $ordenDetalle)
     {
         //
     }
@@ -71,7 +70,7 @@ class DetalleCompraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(detalleCompra $detalleCompra)
+    public function edit(ordenDetalle $ordenDetalle)
     {
         //
     }
@@ -79,7 +78,7 @@ class DetalleCompraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, detalleCompra $detalleCompra)
+    public function update(Request $request, ordenDetalle $ordenDetalle)
     {
         //
     }
@@ -87,9 +86,8 @@ class DetalleCompraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(ordenDetalle $ordenDetalle)
     {
-        DetalleCompra::destroy($id);
-        return response()->json(['success'=>true]);
+        //
     }
 }

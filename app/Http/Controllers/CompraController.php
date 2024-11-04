@@ -17,7 +17,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        
+
         $compras = Compra::with('detalles.producto')->get();
         return view('compras.index', compact('compras'));
     }

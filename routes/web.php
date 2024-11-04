@@ -9,12 +9,18 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DetalleCompraController;
+use App\Http\Controllers\OrdenCompraController;
+use App\Http\Controllers\OrdenController;
+use App\Http\Controllers\OrdenDetalleController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\TempoCompraController;
+use App\Http\Controllers\TempoOrdenController;
 use App\Http\Controllers\VentaController;
+use App\Models\Orden;
+use App\Models\ordenDetalle;
 use App\Models\tempoCompra;
 use App\Models\Venta;
 
@@ -57,13 +63,28 @@ Route::get('/contraseña', [PerfilController::class,'contraseña'])->name('perfi
 Route::post('/contraseña/cambiar', [PerfilController::class,'cambiarcontraseña'])->name('perfil.cambiarcontraseña');
 Route::resource('proveedor', ProveedorController::class);
 
-
+//compras
 Route::get('compras', [CompraController::class, 'index'])->name('compra.index');
 Route::get('compras/create', [CompraController::class, 'create'])->name('compra.create');
-
 Route::post('compras', [CompraController::class, 'store'])->name('compra.store');
 Route::post('tempo', [TempoCompraController::class, 'tempo_Compra'])->name('compra.tempo');
 Route::delete('tempo/{id}', [TempoCompraController::class, 'destroy'])->name('compra.tempo.destroy');
+
+//Orden de compras
+Route::get('orden', [OrdenController::class, 'index'])->name('orden.index');
+//muestra el formulario
+Route::get('orden/create', [OrdenController::class, 'create'])->name('orden.create');
+//envia el formulario
+Route::post('orden', [OrdenController::class, 'store'])->name('orden.store');
+//envia tabla temporal
+Route::post('tempo-orden', [TempoOrdenController::class, 'tempo_Orden'])->name('orden.tempo');
+//elimina producto de la tabla temporal
+Route::delete('tempo-orden/{id}', [TempoOrdenController::class, 'destroy'])->name('orden.tempo.destroy');
+//detalle de la orden detalle
+Route::post('detalle/create', [OrdenDetalleController::class, 'store'])->name('orden.detalle.store');
+//genera pdf de orden de compra
+Route::get('/orden/{id}/descargar-pdf', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
+
 
 
 
