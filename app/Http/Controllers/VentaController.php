@@ -74,7 +74,21 @@ class VentaController extends Controller
 
                     return $btn;
                 })
-                ->rawColumns(['action2','action3'])
+                // ->addColumn('action4', function ($row) {
+                //     //$btn = '<a href="" data-toggle="tooltip"  data-id="' . $row->id . '" target="_blank" data-original-title="Descargar" class="btn btn-primary btn-sm descargarVenta"><i class="fas fa-download"></i></a>';
+                //     $btn = '<a href="' . route('venta.show', $row->id) . '" target="_blank" data-toggle="tooltip" data-original-title="Descargar" class="btn btn-primary btn-sm"><i class="fas fa-download"></i></a>';
+                //     return $btn;
+                // })
+                ->addColumn('action4', function ($row) {
+                    // Verifica si la boleta es "NO GENERADO"
+                    if ($row->boleta != 'NO GENERADO') {
+                        $btn = '<a href="' . route('venta.show', $row->id) . '" target="_blank" data-toggle="tooltip" data-original-title="Descargar" class="btn btn-primary btn-sm"><i class="fas fa-download"></i></a>';
+                        return $btn; // Retorna el botón solo si la boleta es "NO GENERADO"
+                    } else {
+                        return ''; // Retorna un string vacío si no es "NO GENERADO" para no mostrar el botón
+                    }
+                })
+                ->rawColumns(['action2','action3','action4'])
                 ->make(true);
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);
@@ -193,7 +207,7 @@ class VentaController extends Controller
         $venta->created_at = $fecha_actual;
         $venta->updated_at = $fecha_actual;
         $venta->estadoventa = 1;
-        
+
         $venta->save();
 
         // Crear el registro de boleta asociado a la venta
