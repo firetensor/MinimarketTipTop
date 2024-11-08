@@ -39,18 +39,25 @@ class VentaController extends Controller
             $data = DB::table('ventas as v')
             ->join('clientes as c', 'v.id_cliente', '=', 'c.id') // Asegúrate de que el nombre de la columna sea correcto
             ->join('users as u', 'v.idusuario', '=', 'u.id') // Asegúrate de que el nombre de la columna sea correcto
-            ->join('boletas as b', 'v.id', '=', 'b.venta_id') // Relación con la tabla de boletas
+            //->join('boletas as b', 'v.id', '=', 'b.venta_id') // Relación con la tabla de boletas
+            ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id') // Cambiado a leftJoin para incluir ventas sin boletas
             ->join('venta_detalle as d', 'v.id', '=', 'd.id_venta')
-            ->where('v.estadoventa', '=', 1)
+            //->where('v.estadoventa', '=', 1)
+            ->where(function ($query) {
+                $query->where('v.estadoventa', '=', 1)
+                      ->orWhereNull('v.estadoventa');
+            })
              ->select(
                 'v.id',              // Asegúrate de incluir esta columna
                 'v.total_pagar',    // Asegúrate de incluir esta columna
                 'c.nombre_cliente as nombre_cliente',
+                DB::raw("DATE_FORMAT(v.created_at, '%d-%m-%Y') as fecha"),
                 'u.email as email',
-                DB::raw("CONCAT(b.serie, '-', b.numero) as boleta"),
+                //DB::raw("CONCAT(b.serie, '-', b.numero) as boleta"),
+                DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"), // Muestra "NO GENERADO" si no hay boleta
                 DB::raw("SUM(d.cantidad) as total_cantidad")
              ) 
-             ->groupBy('v.id', 'v.total_pagar', 'c.nombre_cliente', 'u.email', 'b.serie', 'b.numero') // Incluye todas las columnas seleccionadas
+             ->groupBy('v.id', 'v.total_pagar','v.created_at', 'c.nombre_cliente', 'u.email', 'b.serie', 'b.numero') // Incluye todas las columnas seleccionadas
 
             ->get();
             
@@ -185,7 +192,7 @@ class VentaController extends Controller
             $fecha_actual = date("Y-m-d H:i:s"); 
         $venta->created_at = $fecha_actual;
         $venta->updated_at = $fecha_actual;
-        $venta->venta = 1;
+        $venta->estadoventa = 1;
         $venta->save();
 
         // Crear el registro de boleta asociado a la venta

@@ -182,16 +182,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-6">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="">Vendedor: </label>
                             </div>
                             
                             {{-- <div class="col-md-4">
                                 <p class="text-right" name="vuelto" id="vuelto" ></p>
                             </div> --}}
-                            <div class="col-md-3">
+                            <div class="col-md-8">
                                 <p class="text-right" name="nombre_vendedor" id="nombre_vendedor" ></p>
                             </div>
                         </div>
@@ -264,8 +264,8 @@
                     name: 'boleta'
                 },
                 {
-                    data: 'nombre_cliente',
-                    name: 'nombre_cliente'
+                    data: 'fecha',
+                    name: 'fecha'
                 },
                 {
                     data: 'nombre_cliente',
@@ -314,6 +314,9 @@
                     $('#igvtotal').text(igv.toFixed(2));
                     $('#pago').text(pago.toFixed(2));
                     $('#vuelto').text(vuelto.toFixed(2));
+
+                    $('#nombre_vendedor').text(data.data3.email);
+                    $('#cod_vendedor').text(data.data3.id);
                     
                     tableDetalles.clear();
 
