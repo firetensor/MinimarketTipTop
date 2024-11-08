@@ -193,7 +193,7 @@
 
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="fa-solid fa-check"></i>
+        <i class="fa-solid fa-cube"></i>
         <p>
             Almacén
             <i class="right fas fa-angle-left"></i>
@@ -252,7 +252,7 @@
 
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="fa-solid fa-clipboard-list"></i>
+        <i class="fa-solid fa-cart-shopping"></i>
         <p>
             Compras
             <i class="right fas fa-angle-left"></i>
@@ -331,7 +331,14 @@
   </a>
 </li>
 
-
+<li class="nav-item">
+    <a href="{{route('prediccion.index')}}" class="nav-link">
+        <i class="fa-solid fa-chart-simple"></i>
+        <p>
+            Predicción de ventas
+        </p>
+    </a>
+  </li>
 
 
 
