@@ -75,7 +75,9 @@ class VentaController extends Controller
                 //DB::raw("CONCAT(b.serie, '-', b.numero) as boleta"),
                 DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"), // Muestra "NO GENERADO" si no hay boleta
                 DB::raw("SUM(d.cantidad) as total_cantidad")
+
              )
+
              ->groupBy('v.id', 'v.total_pagar','v.created_at', 'c.nombre_cliente', 'u.email', 'b.serie', 'b.numero') // Incluye todas las columnas seleccionadas
 
             ->get();
@@ -93,7 +95,21 @@ class VentaController extends Controller
 
                     return $btn;
                 })
-                ->rawColumns(['action2','action3'])
+                // ->addColumn('action4', function ($row) {
+                //     //$btn = '<a href="" data-toggle="tooltip"  data-id="' . $row->id . '" target="_blank" data-original-title="Descargar" class="btn btn-primary btn-sm descargarVenta"><i class="fas fa-download"></i></a>';
+                //     $btn = '<a href="' . route('venta.show', $row->id) . '" target="_blank" data-toggle="tooltip" data-original-title="Descargar" class="btn btn-primary btn-sm"><i class="fas fa-download"></i></a>';
+                //     return $btn;
+                // })
+                ->addColumn('action4', function ($row) {
+                    // Verifica si la boleta es "NO GENERADO"
+                    if ($row->boleta != 'NO GENERADO') {
+                        $btn = '<a href="' . route('venta.show', $row->id) . '" target="_blank" data-toggle="tooltip" data-original-title="Descargar" class="btn btn-primary btn-sm"><i class="fas fa-download"></i></a>';
+                        return $btn; // Retorna el botón solo si la boleta es "NO GENERADO"
+                    } else {
+                        return ''; // Retorna un string vacío si no es "NO GENERADO" para no mostrar el botón
+                    }
+                })
+                ->rawColumns(['action2','action3','action4'])
                 ->make(true);
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()]);

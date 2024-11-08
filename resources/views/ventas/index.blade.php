@@ -241,7 +241,9 @@
             "language": {
             "lengthMenu": "Mostrar MENU registros por página",
             "zeroRecords": "Nada encontrado - disculpa",
+
             "info": "Mostrando la página PAGE de PAGES",
+
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtrado de MAX registros totales)",
             "search": "Buscar:",
@@ -285,6 +287,7 @@
                     name: 'name',
                     'render': function(data, type, row) {
                         return @can('usuario.show') data.action3 +' '+ @endcan ''
+
 
                             @can('usuario.destroy') +data.action2 @endcan;
                     }
@@ -365,6 +368,29 @@
                 "lengthMenu": "Mostrar MENU productos"
             }
         });
+
+        // $('body').on('click', '.descargarVenta', function() {
+        //     // var Venta_id = $(this).data('id');
+        //     // window.location.href = "/venta/"+Venta_id;
+        //     var Venta_id = $(this).data('id');
+        //     // var url = "{{ route('venta.show', ':id') }}";
+        //     // url = url.replace(':id', Venta_id);
+        //     var url = "{{ route('venta.show', ':id') }}".replace(':id', Venta_id);
+        //     //window.location.href = url;
+        //     // Abrir la URL en una nueva ventana/pestaña
+        //     //window.open(url, '_blank');
+        //     // Usamos setTimeout para retrasar la apertura de la nueva ventana
+        //     setTimeout(function() {
+        //         var newWindow = window.open(url, '_blank');
+                
+        //         // Verificar si la nueva ventana se abrió correctamente
+        //         if (newWindow) {
+        //             newWindow.focus();  // Da foco a la nueva ventana
+        //         } else {
+        //             alert("No se pudo abrir la nueva ventana. Verifique la configuración del navegador.");
+        //         }
+        //     }, 0);  // 0 milisegundos de retraso, solo para separar el proceso
+        // });
 
     });
 </script>
