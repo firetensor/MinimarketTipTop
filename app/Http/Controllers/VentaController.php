@@ -355,7 +355,7 @@ class VentaController extends Controller
         $cliente=Cliente::find($venta->id_cliente);
         $user = User::find($venta->idusuario);
 
-        return response()->json(['data' => $detalles,'data2' => $cliente,'data3' => $user,'data4' =>$boleta]);
+        return response()->json(['data' => $detalles,'data2' => $cliente,'data3' => $user,'data4' =>$boleta,'data5'=>$venta]);
     }
 
     

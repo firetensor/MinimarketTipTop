@@ -93,73 +93,111 @@
                 </table>
                 
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <label for="">Operaciones gravadas : </label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <p class=" text-right" name="opgravadas" id="opgravadas"></p>
                     </div><br><br>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <label for="">Operaciones exoneradas: </label>
                     </div>
-                    <div class="col-md-2">
+                    
+                    <div class="col-md-3">
                         
                     </div>
-                    <div class="col-md-2">
-                        <p class="text-right" name="opexoneradas" id="opexoneradas" ></p>
+                    <div class="col-md-3">
+                        <p class="text-right" name="opexoneradas" id="opexoneradas" >0.00</p>
                     </div><br><br>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <label for="">IGV: </label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <p class="text-right" name="igvtotal" id="igvtotal" ></p>
                     </div><br><br>
                 </div>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-5">
                         <label for="">Total venta: </label>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <p class="text-right" name="totalventa" id="totalventa" ></p>
                     </div><br><br>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-3">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-3">
                                 <label for="">Pago: </label>
                             </div>
                             
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <input type="text" class="form-control text-right" name="pago" id="pago" >
+                            </div> --}}
+                            <div class="col-md-3">
+                                <p class="text-right" name="pago" id="pago" ></p>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-3">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <label for="">Vuelto: </label>
                             </div>
                             
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
+                                <p class="text-right" name="vuelto" id="vuelto" ></p>
+                            </div> --}}
+                            <div class="col-md-3">
                                 <p class="text-right" name="vuelto" id="vuelto" ></p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="">Cód.: </label>
+                            </div>
+                            
+                            {{-- <div class="col-md-4">
+                                <input type="text" class="form-control text-right" name="pago" id="pago" >
+                            </div> --}}
+                            <div class="col-md-3">
+                                <p class="text-right" name="cod_vendedor" id="cod_vendedor" ></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Vendedor: </label>
+                            </div>
+                            
+                            {{-- <div class="col-md-4">
+                                <p class="text-right" name="vuelto" id="vuelto" ></p>
+                            </div> --}}
+                            <div class="col-md-3">
+                                <p class="text-right" name="nombre_vendedor" id="nombre_vendedor" ></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -264,7 +302,19 @@
                     $('#v_nombre_cliente').text(data.data2.nombre_cliente);
                     $('#v_dni_ruc').text(data.data2.dni_ruc);
                     $('#v_email').text(data.data2.email);
+                    $('#totalventa').text(data.data5.total_pagar);
 
+                    var totalPagar = parseFloat(data.data5.total_pagar);
+                    var opgravadas = totalPagar / 1.18;  // Calculando opgravadas
+                    var igv= totalPagar - opgravadas;
+                    var pago=parseFloat(data.data4.pago);
+                    var vuelto = pago - totalPagar;
+
+                    $('#opgravadas').text(opgravadas.toFixed(2));
+                    $('#igvtotal').text(igv.toFixed(2));
+                    $('#pago').text(pago.toFixed(2));
+                    $('#vuelto').text(vuelto.toFixed(2));
+                    
                     tableDetalles.clear();
 
                     // Iterar sobre los detalles y agregarlos a la tabla
