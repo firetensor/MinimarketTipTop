@@ -10,7 +10,7 @@ class Venta extends Model
     use HasFactory;
     protected $table='ventas';
     protected $primaryKey='id';
-    protected $fillable=['idcliente','total_pagar','idusuario','created_at'];
+    protected $fillable=['idcliente','total_pagar','idusuario','created_at','estadoventa'];
     public $timestamps=false;
 
     public function users()
