@@ -193,6 +193,7 @@ class VentaController extends Controller
         $venta->created_at = $fecha_actual;
         $venta->updated_at = $fecha_actual;
         $venta->estadoventa = 1;
+        
         $venta->save();
 
         // Crear el registro de boleta asociado a la venta
