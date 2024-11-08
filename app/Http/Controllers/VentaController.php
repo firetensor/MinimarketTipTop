@@ -23,9 +23,28 @@ class VentaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+    public function obtenerDatosVentas()
+    {
+        $ventas = DB::table('ventas')
+            ->join('venta_detalle', 'ventas.id', '=', 'venta_detalle.id_venta')  // Se mantiene la unión con la tabla 'venta_detalle'
+            ->join('productos', 'venta_detalle.id_producto', '=', 'productos.id')  // Se añade la unión con la tabla 'productos'
+            ->select(
+                'ventas.id',
+                'ventas.total_pagar',
+                'ventas.created_at',
+                'venta_detalle.cantidad',
+                'venta_detalle.id_producto',
+                'productos.precio_venta'  // Ahora seleccionamos la columna 'precioproducto' de 'productos'
+            )
+            ->get();
 
-    
+        return response()->json($ventas);
+    }
+
+
+
+
+
     public function index(Request $request)
     {
         $ventas=Venta::all();
@@ -39,24 +58,31 @@ class VentaController extends Controller
             $data = DB::table('ventas as v')
             ->join('clientes as c', 'v.id_cliente', '=', 'c.id') // Asegúrate de que el nombre de la columna sea correcto
             ->join('users as u', 'v.idusuario', '=', 'u.id') // Asegúrate de que el nombre de la columna sea correcto
-            ->join('boletas as b', 'v.id', '=', 'b.venta_id') // Relación con la tabla de boletas
+            //->join('boletas as b', 'v.id', '=', 'b.venta_id') // Relación con la tabla de boletas
+            ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id') // Cambiado a leftJoin para incluir ventas sin boletas
             ->join('venta_detalle as d', 'v.id', '=', 'd.id_venta')
-            ->where('v.estadoventa', '=', 1)
+            //->where('v.estadoventa', '=', 1)
+            ->where(function ($query) {
+                $query->where('v.estadoventa', '=', 1)
+                      ->orWhereNull('v.estadoventa');
+            })
              ->select(
                 'v.id',              // Asegúrate de incluir esta columna
                 'v.total_pagar',    // Asegúrate de incluir esta columna
                 'c.nombre_cliente as nombre_cliente',
+                DB::raw("DATE_FORMAT(v.created_at, '%d-%m-%Y') as fecha"),
                 'u.email as email',
-                DB::raw("CONCAT(b.serie, '-', b.numero) as boleta"),
+                //DB::raw("CONCAT(b.serie, '-', b.numero) as boleta"),
+                DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"), // Muestra "NO GENERADO" si no hay boleta
                 DB::raw("SUM(d.cantidad) as total_cantidad")
-             ) 
-             ->groupBy('v.id', 'v.total_pagar', 'c.nombre_cliente', 'u.email', 'b.serie', 'b.numero') // Incluye todas las columnas seleccionadas
+             )
+             ->groupBy('v.id', 'v.total_pagar','v.created_at', 'c.nombre_cliente', 'u.email', 'b.serie', 'b.numero') // Incluye todas las columnas seleccionadas
 
             ->get();
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
-                
+
                 ->addColumn('action2', function ($row) {
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteVenta"><i class="fa fa-trash"></i></a>';
 
@@ -89,7 +115,7 @@ class VentaController extends Controller
         $ultimoNumeroBoleta = Boleta::max('numero') ?? 0;
         $proximoNumeroBoleta = $ultimoNumeroBoleta + 1;
 
-        
+
         // if ($request->ajax()) {
 		// 	$data = DB::table('clientes as c')
         //     ->where('c.estadocliente','=',1)
@@ -101,10 +127,10 @@ class VentaController extends Controller
         //             $btn = '<a data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm seleccionarcliente" ><i class="fas fa-check"></i>Seleccionar</a>';
         //             return $btn;
         //         })
-                
+
         //         ->rawColumns(['action1'])
         //         ->make(true);
-        
+
         //     $data2 = DB::table('productos as p')
         //     ->where('p.estadoproducto','=',1)
         //     ->select('p.*')
@@ -115,7 +141,7 @@ class VentaController extends Controller
         //             $btn = '<a data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm seleccionarproducto" ><i class="fas fa-check"></i>Seleccionar</a>';
         //             return $btn;
         //         })
-                
+
         //         ->rawColumns(['action2'])
         //         ->make(true);
         // }
@@ -130,7 +156,7 @@ class VentaController extends Controller
                 ->where('c.estadocliente', '=', 1)
                 ->select('c.*')
                 ->get();
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action1', function ($row) {
@@ -148,7 +174,7 @@ class VentaController extends Controller
                 ->where('p.estadoproducto', '=', 1)
                 ->select('p.*')
                 ->get();
-            
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action2', function ($row) {
@@ -181,11 +207,12 @@ class VentaController extends Controller
         //$venta->vuelto = $request->vuelto;
         $venta->id_cliente = $request->cliente;
         $venta->idusuario=  auth()->user()->id;
-        date_default_timezone_set('America/Lima');		
-            $fecha_actual = date("Y-m-d H:i:s"); 
+        date_default_timezone_set('America/Lima');
+            $fecha_actual = date("Y-m-d H:i:s");
         $venta->created_at = $fecha_actual;
         $venta->updated_at = $fecha_actual;
-        $venta->venta = 1;
+        $venta->estadoventa = 1;
+
         $venta->save();
 
         // Crear el registro de boleta asociado a la venta
@@ -199,20 +226,20 @@ class VentaController extends Controller
 
         // Guardar los detalles de la venta
         foreach ($request->detalles as $detalle) {
-            
+
             // Buscar el producto por el código y obtener su ID
             $producto = Producto::where('codigo', $detalle['codigo'])->first();
 
             // Verificar si el producto existe
             if ($producto) {
-                
+
                 $detalleVenta = new DetalleVenta();
                 $detalleVenta->id_venta = $venta->id;
                 $detalleVenta->id_producto = $producto->id; // Guardar el ID del producto en lugar del código
                 $detalleVenta->cantidad = $detalle['cantidad'];
                 $detalleVenta->preciopoducto = $detalle['precioVenta'];
-                date_default_timezone_set('America/Lima');		
-                    $fecha_actual = date("Y-m-d H:i:s"); 
+                date_default_timezone_set('America/Lima');
+                    $fecha_actual = date("Y-m-d H:i:s");
                 $detalleVenta->created_at = $fecha_actual;
                 $detalleVenta->updated_at = $fecha_actual;
 
@@ -242,7 +269,7 @@ class VentaController extends Controller
     public function verproductoseleccionado(string $id)
     {
         $producto = Producto::find($id);
-        
+
         return response()->json(['data' => $producto]);
     }
     /**
@@ -250,16 +277,16 @@ class VentaController extends Controller
      */
     public function boleta(string $id)
     {
-        
+
 
         $idventa = Venta::find($id);
-        
+
         return view('ventas.boleta',compact('idventa'));
     }
 
     public function show(string $id)
     {
-        
+
         //$venta = Venta::find($id);
         $imprimir=true;
 
@@ -289,7 +316,7 @@ class VentaController extends Controller
                 ];
             })
         ];
-        
+
         // Generar el código QR con los datos del comprobante
         $codigoQR = QrCode::size(200)->generate(json_encode($datosQR));
         //dd($codigoQR);
@@ -303,7 +330,7 @@ class VentaController extends Controller
     public function edit(string $id)
     {
         $cliente = Cliente::find($id);
-        
+
         return response()->json(['data' => $cliente]);
     }
 
@@ -359,7 +386,7 @@ class VentaController extends Controller
         return response()->json(['data' => $detalles,'data2' => $cliente,'data3' => $user,'data4' =>$boleta,'data5'=>$venta]);
     }
 
-    
+
 
     public function update(Request $request, string $id)
     {
