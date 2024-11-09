@@ -40,11 +40,11 @@
                   <th scope="col">Opciones</th>
                 </tr>
                 </thead>
-                    
+
                 <tbody>
 
                 </tbody>
-            
+
                 </table>
             </div>
         </div>
@@ -60,21 +60,21 @@
             </div>
             <div class="modal-body">
 
-                <div class="row"> 
+                <div class="row">
                     <p class="col-2">Boleta: </p>
                     <p class="col-3" id="v_boleta"></p>
                     <p class="col-2">Cliente:</p>
                     <p class="col-5" id="v_nombre_cliente">c</p>
-                </div>   
+                </div>
                 <div class="row">
-                    
+
                     <p class="col-2">DNI/RUC:</p>
                     <p class="col-3" id="v_dni_ruc"></p>
                     <p class="col-2">Email:</p>
                     <p class="col-5" id="v_email"></p>
-                    
+
                 </div>
-                
+
                 <table class="table table-striped nowrap" id="table-detalles" name="table-detalles">
                     <thead style="background-color:#1C91EC;color: #fff;">
                         <tr>
@@ -85,19 +85,19 @@
                         <th scope="col">TOTAL</th>
                         </tr>
                     </thead>
-                        
+
                     <tbody>
 
                     </tbody>
-                
+
                 </table>
-                
+
                 <div class="row">
                     <div class="col-md-5">
                         <label for="">Operaciones gravadas : </label>
                     </div>
                     <div class="col-md-3">
-                        
+
                     </div>
                     <div class="col-md-3">
                         <p class=" text-right" name="opgravadas" id="opgravadas"></p>
@@ -107,9 +107,9 @@
                     <div class="col-md-5">
                         <label for="">Operaciones exoneradas: </label>
                     </div>
-                    
+
                     <div class="col-md-3">
-                        
+
                     </div>
                     <div class="col-md-3">
                         <p class="text-right" name="opexoneradas" id="opexoneradas" >0.00</p>
@@ -120,7 +120,7 @@
                         <label for="">IGV: </label>
                     </div>
                     <div class="col-md-3">
-                        
+
                     </div>
                     <div class="col-md-3">
                         <p class="text-right" name="igvtotal" id="igvtotal" ></p>
@@ -131,7 +131,7 @@
                         <label for="">Total venta: </label>
                     </div>
                     <div class="col-md-3">
-                        
+
                     </div>
                     <div class="col-md-3">
                         <p class="text-right" name="totalventa" id="totalventa" ></p>
@@ -143,7 +143,7 @@
                             <div class="col-md-3">
                                 <label for="">Pago: </label>
                             </div>
-                            
+
                             {{-- <div class="col-md-4">
                                 <input type="text" class="form-control text-right" name="pago" id="pago" >
                             </div> --}}
@@ -157,7 +157,7 @@
                             <div class="col-md-4">
                                 <label for="">Vuelto: </label>
                             </div>
-                            
+
                             {{-- <div class="col-md-4">
                                 <p class="text-right" name="vuelto" id="vuelto" ></p>
                             </div> --}}
@@ -173,7 +173,7 @@
                             <div class="col-md-3">
                                 <label for="">Cód.: </label>
                             </div>
-                            
+
                             {{-- <div class="col-md-4">
                                 <input type="text" class="form-control text-right" name="pago" id="pago" >
                             </div> --}}
@@ -187,7 +187,7 @@
                             <div class="col-md-3">
                                 <label for="">Vendedor: </label>
                             </div>
-                            
+
                             {{-- <div class="col-md-4">
                                 <p class="text-right" name="vuelto" id="vuelto" ></p>
                             </div> --}}
@@ -197,7 +197,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -214,7 +214,7 @@
     setTimeout(function () {
         //selecciono el id mensaje y lo remuevo en 2000 segundos
         document.querySelector('#mensaje').remove();
-        
+
     }, 2000);
 </script>
 <script>
@@ -239,12 +239,13 @@
             scrollX: true, // Activa el desplazamiento horizontal
             scroller: true, // Usa el plugin Scroller para manejar el desplazamiento en tablas grandes
             "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "lengthMenu": "Mostrar MENU registros por página",
             "zeroRecords": "Nada encontrado - disculpa",
-            //"info": "Mostrando la página _PAGE_ de _PAGES_",
-            "info": "Mostrando la página _START_ de _END_ páginas de _TOTAL_ registros",
+
+            "info": "Mostrando la página PAGE de PAGES",
+
             "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrado de _MAX_ registros totales)",
+            "infoFiltered": "(filtrado de MAX registros totales)",
             "search": "Buscar:",
             "paginate":{
                 "next" : "Siguiente",
@@ -274,7 +275,7 @@
                     data: 'nombre_cliente',
                     name: 'nombre_cliente'
                 },
-                
+
                 {
                     data: 'total_pagar',
                     name: 'total_pagar'
@@ -288,7 +289,8 @@
                     name: 'name',
                     'render': function(data, type, row) {
                         return @can('usuario.show') data.action3 +' '+ @endcan ''
-                            @can('usuario.show') + data.action4 +' '+ @endcan ''
+
+
                             @can('usuario.destroy') +data.action2 @endcan;
                     }
                 }
@@ -320,7 +322,7 @@
 
                     $('#nombre_vendedor').text(data.data3.email);
                     $('#cod_vendedor').text(data.data3.id);
-                    
+
                     tableDetalles.clear();
 
                     // Iterar sobre los detalles y agregarlos a la tabla
@@ -346,9 +348,9 @@
                         ]);
                     });
                     tableDetalles.draw();
-                    
+
                 })
-           
+
         });
         var tableDetalles = $('#table-detalles').DataTable({
             paging: true, // Activar la paginación
@@ -356,16 +358,16 @@
             ordering: false, // Desactivar la ordenación
             info: true, // Mostrar la información de la tabla
             responsive: true, // Activa la responsividad
-            
+
             language: {
                 "paginate": {
                     "next": "Siguiente",
                     "previous": "Anterior"
                 },
                 "emptyTable": "No hay detalles de venta",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ productos",
+                "info": "Mostrando START a END de TOTAL productos",
                 "infoEmpty": "Mostrando 0 a 0 de 0 productos",
-                "lengthMenu": "Mostrar _MENU_ productos"
+                "lengthMenu": "Mostrar MENU productos"
             }
         });
 

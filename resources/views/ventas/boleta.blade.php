@@ -18,9 +18,11 @@
 
     <center>
         <input type="text" name="venta_id_generar" id="venta_id_generar" value="{{ $idventa->id }}" hidden readonly>
-        
+
+
         <!-- Botón para abrir nueva pestaña y redirigir la página actual -->
-        <a href="#" id="btngenerar" name="btngenerar" class="btn btn-primary" onclick="abrirYRedirigir()">Descargar comprobante</a>
+        <a href="#" id="btngenerar" name="btngenerar" class="btn btn-primary" onclick="abrirYRedirigir()">Generar comprobante</a>
+
     </center>
 
     <!-- Formulario oculto para abrir la nueva pestaña -->

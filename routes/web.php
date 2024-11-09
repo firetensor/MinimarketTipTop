@@ -15,6 +15,7 @@ use App\Http\Controllers\OrdenDetalleController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\PrediccionController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\TempoCompraController;
@@ -104,6 +105,10 @@ Route::delete('detalle/{id}', [DetalleCompraController::class, 'destroy'])->name
 Route::post('detalle/create', [DetalleCompraController::class, 'store'])->name('compra.detalle.store');
 
 
+
+//Prediccion
+Route::get('/prediccion', [PrediccionController::class, 'index'])->name('prediccion.index');
+Route::get('/api/ventas', [VentaController::class, 'obtenerDatosVentas']);
 
 
 
