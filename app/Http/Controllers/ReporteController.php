@@ -253,4 +253,13 @@ class ReporteController extends Controller
     {
         //
     }
+
+
+    //PARA API
+
+    public function getReportes()
+    {
+        $ventas = Venta::all();  // O la consulta que necesites
+        return response()->json($ventas);
+    }
 }
