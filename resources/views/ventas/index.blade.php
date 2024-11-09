@@ -31,7 +31,7 @@
               <table class="table table-striped nowrap" id="table-ventas" name="table-ventas">
                 <thead style="background-color:#1C91EC;color: #fff;">
                 <tr>
-                  <th scope="col">ID</th>
+                  {{-- <th scope="col">ID</th> --}}
                   <th scope="col">Boleta</th>
                   <th scope="col">Fecha</th>
                   <th scope="col">Cliente</th>
@@ -256,9 +256,11 @@
                 [0, "asc"]
             ],
             ajax: "{{ route('venta.index') }}",
-            columns: [{
-                    data: 'id',
-                    name: 'id'
+            columns: [
+                {
+                    data: 'id', // Campo de ID de venta
+                    name: 'id',
+                    visible: false // Opcional: Ocultar la columna ID si no es necesario mostrarla
                 },
                 {
                     data: 'boleta',

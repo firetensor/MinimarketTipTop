@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\TempoCompraController;
 use App\Http\Controllers\TempoOrdenController;
 use App\Http\Controllers\VentaController;
@@ -62,6 +63,9 @@ Route::resource('perfil', PerfilController::class);
 Route::get('/contraseña', [PerfilController::class,'contraseña'])->name('perfil.contraseña');
 Route::post('/contraseña/cambiar', [PerfilController::class,'cambiarcontraseña'])->name('perfil.cambiarcontraseña');
 Route::resource('proveedor', ProveedorController::class);
+
+Route::resource('reporte', ReporteController::class);
+
 
 //compras
 Route::get('compras', [CompraController::class, 'index'])->name('compra.index');

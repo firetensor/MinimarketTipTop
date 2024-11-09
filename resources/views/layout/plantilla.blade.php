@@ -331,6 +331,33 @@
   </a>
 </li>
 
+<li class="nav-item {{ request()->is('reporte*') || request()->is('gestion*') ? 'menu-open' : '' }}" >
+  <a href="{{--route('prestamo.index')--}}" class="nav-link {{ request()->is('reporte*') || request()->is('gestion*') || request()->is('roles*') ? 'active' : '' }}" >
+    <i class="fas fa-shield-alt"></i>
+    <p>
+      Reportes
+      <i class="right fas fa-angle-left"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+    @can('permiso.index')
+    <li class="nav-item">
+      <a href="{{route('reporte.index')}}" class="nav-link {{ request()->is('reporte*') ? 'active' : '' }}">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Gráficos</p>
+      </a>
+    @endcan
+    </li>
+    @can('role.index')
+    <li class="nav-item">
+      <a href="{{route('reporte.create')}}" class="nav-link {{ request()->is('gestion*') ? 'active' : '' }}">
+        <i class="far fa-circle nav-icon"></i>
+        <p>De gestión</p>
+      </a>
+    @endcan
+    </li>
+  </ul>
+</li>
 
 
 
