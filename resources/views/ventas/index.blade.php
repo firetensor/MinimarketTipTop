@@ -31,7 +31,7 @@
               <table class="table table-striped nowrap" id="table-ventas" name="table-ventas">
                 <thead style="background-color:#1C91EC;color: #fff;">
                 <tr>
-                  {{-- <th scope="col">ID</th> --}}
+                  <th scope="col">ID</th>
                   <th scope="col">Boleta</th>
                   <th scope="col">Fecha</th>
                   <th scope="col">Cliente</th>
@@ -239,13 +239,11 @@
             scrollX: true, // Activa el desplazamiento horizontal
             scroller: true, // Usa el plugin Scroller para manejar el desplazamiento en tablas grandes
             "language": {
-            "lengthMenu": "Mostrar MENU registros por página",
+            "lengthMenu": "Mostrar _MENU_ registros por página", // Asegúrate de usar _MENU_
             "zeroRecords": "Nada encontrado - disculpa",
-
-            "info": "Mostrando la página PAGE de PAGES",
-
+            "info": "Mostrando la página _PAGE_ de _PAGES_", // Usa _PAGE_ y _PAGES_ para interpolar correctamente
             "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrado de MAX registros totales)",
+            "infoFiltered": "(filtrado de _MAX_ registros totales)",
             "search": "Buscar:",
             "paginate":{
                 "next" : "Siguiente",
@@ -289,8 +287,7 @@
                     name: 'name',
                     'render': function(data, type, row) {
                         return @can('usuario.show') data.action3 +' '+ @endcan ''
-
-
+                            @can('usuario.edit') + data.action4 +' '+ @endcan ''
                             @can('usuario.destroy') +data.action2 @endcan;
                     }
                 }
@@ -365,9 +362,9 @@
                     "previous": "Anterior"
                 },
                 "emptyTable": "No hay detalles de venta",
-                "info": "Mostrando START a END de TOTAL productos",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ productos", // Usar los marcadores adecuados
                 "infoEmpty": "Mostrando 0 a 0 de 0 productos",
-                "lengthMenu": "Mostrar MENU productos"
+                "lengthMenu": "Mostrar _MENU_ productos"
             }
         });
 
