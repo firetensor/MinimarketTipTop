@@ -20,31 +20,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VentaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function obtenerDatosVentas()
-    {
-        $ventas = DB::table('ventas')
-            ->join('venta_detalle', 'ventas.id', '=', 'venta_detalle.id_venta')  // Se mantiene la unión con la tabla 'venta_detalle'
-            ->join('productos', 'venta_detalle.id_producto', '=', 'productos.id')  // Se añade la unión con la tabla 'productos'
-            ->select(
-                'ventas.id',
-                'ventas.total_pagar',
-                'ventas.created_at',
-                'venta_detalle.cantidad',
-                'venta_detalle.id_producto',
-                'productos.precio_venta'  // Ahora seleccionamos la columna 'precioproducto' de 'productos'
-            )
-            ->get();
-
-        return response()->json($ventas);
-    }
-
-
-
-
-
     public function index(Request $request)
     {
         $ventas=Venta::all();
