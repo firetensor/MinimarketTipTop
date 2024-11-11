@@ -10,7 +10,7 @@ class VentaSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 1; $i <= 900; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             // Establece la fecha de inicio como 1 de enero de 2024 y la fecha de finalización como la fecha actual
             $fechaInicio = Carbon::create(2024, 1, 1);
             $fechaHoy = Carbon::now();
