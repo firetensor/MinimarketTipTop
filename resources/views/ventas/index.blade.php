@@ -381,7 +381,7 @@
         //     // Usamos setTimeout para retrasar la apertura de la nueva ventana
         //     setTimeout(function() {
         //         var newWindow = window.open(url, '_blank');
-                
+
         //         // Verificar si la nueva ventana se abrió correctamente
         //         if (newWindow) {
         //             newWindow.focus();  // Da foco a la nueva ventana
