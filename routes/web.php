@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\StockExport;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermisoControl;
 use App\Http\Controllers\PermisoController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\TempoCompraController;
 use App\Http\Controllers\TempoOrdenController;
 use App\Http\Controllers\VentaController;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Orden;
 use App\Models\ordenDetalle;
 use App\Models\tempoCompra;
@@ -66,6 +69,16 @@ Route::post('/contraseña/cambiar', [PerfilController::class,'cambiarcontraseña
 Route::resource('proveedor', ProveedorController::class);
 
 Route::resource('reporte', ReporteController::class);
+Route::get('/reporteStock', [ReporteController::class,'reporteStock'])->name('reporte.stock');
+Route::get('/reporteVentaDetallada', [ReporteController::class,'reporteVentaDetallada'])->name('reporte.ventaDetallada');
+
+//excel
+Route::get('/exportar-reportestock', function () {
+  return Excel::download(new StockExport, 'ReporteStock.xlsx');
+})->name('exportar.reporteStock');
+
+//pdf
+Route::post('/exportar-pdf', [ReporteController::class, 'exportarPDF'])->name('exportar.pdf');
 
 
 //compras

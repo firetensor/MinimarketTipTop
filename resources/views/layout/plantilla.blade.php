@@ -34,6 +34,17 @@
   {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.bootstrap5.css"> --}}
 
+  <!-- CSS de Scroller -->
+<link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.0.7/css/scroller.dataTables.min.css">
+
+<!-- JS de Scroller -->
+<script src="https://cdn.datatables.net/scroller/2.0.7/js/dataTables.scroller.min.js"></script>
+
+
+
+
+  
+
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -83,7 +94,7 @@
   <aside class="main-sidebar  sidebar-dark-primary elevation-4" >
     <!-- Brand Logo -->
     <a href="{{route('home')}}" style="text-decoration:none;" class="brand-link">
-      <img src="/img/logo.png" alt="KAMIL" class="brand-image img-circle elevation-3" style="opacity: .8">
+      Minimarket <img style="margin-left: 0" src="/images/login/logo.png" alt="logo" width="" height="30" />
       <span class="brand-text font-weight-light"></span>
     </a>
 
@@ -342,15 +353,15 @@
   <ul class="nav nav-treeview">
     @can('permiso.index')
     <li class="nav-item">
-      <a href="{{route('reporte.index')}}" class="nav-link {{ request()->is('reporte*') ? 'active' : '' }}">
+      <a href="{{route('reporte.create')}}" class="nav-link {{ request()->is('reporte*') ? 'active' : '' }}">
         <i class="far fa-circle nav-icon"></i>
-        <p>Gráficos</p>
+        <p>Panel</p>
       </a>
     @endcan
     </li>
     @can('role.index')
     <li class="nav-item">
-      <a href="{{route('reporte.create')}}" class="nav-link {{ request()->is('gestion*') ? 'active' : '' }}">
+      <a href="{{route('reporte.index')}}" class="nav-link {{ request()->is('gestion*') ? 'active' : '' }}">
         <i class="far fa-circle nav-icon"></i>
         <p>De gestión</p>
       </a>
@@ -454,6 +465,9 @@
 
 <!-- DataTables Buttons -->
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 
 </html>

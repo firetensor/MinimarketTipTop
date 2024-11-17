@@ -7,6 +7,13 @@ use App\Models\DetalleVenta;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Stmt\TryCatch;
+use PHPUnit\Framework\Attributes\Group;
 
 class ReporteController extends Controller
 {
@@ -211,7 +218,211 @@ class ReporteController extends Controller
      */
     public function create()
     {
-        //
+        return view('reportes.index');
+    }
+
+    //Stock
+    public function reporteStock(Request $request){
+
+
+        if ($request->ajax()) {
+			$data = DB::table('productos as p')
+            ->where('p.estadoproducto', '=', 1)
+            ->join('categorias as c', 'p.id_categoria', '=', 'c.id')
+            ->select(
+                'p.id as id',
+                'p.codigo as codigo',
+                'p.nombre_producto as nombre',
+                'c.nombre_categoria as categoria',
+                'p.stock as stock',
+                'p.precio_compra as preciocompra',
+                'p.precio_venta as precioventa',
+                DB::raw("ROUND(p.precio_venta / 1.18, 2) as precio_sin_igv"), // Cálculo del precio sin IGV
+                DB::raw("ROUND((p.precio_venta / 1.18) * p.stock, 2) as valorizado") // Valorizado
+            )
+            ->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                
+                
+                ->make(true);
+        }
+
+        $stockporcategoria= DB::select('select c.nombre_categoria as categoria, SUM(p.stock) as stock from productos p inner join categorias c on p.id_categoria=c.id where p.estadoproducto=1 group by c.nombre_categoria');
+
+        foreach ($stockporcategoria as $row) {
+            
+            $nombres[] = $row->categoria;
+            $valores[] = $row->stock;
+    
+        }
+
+        return view('reportes.reporteStock', compact('nombres','valores'));
+    }
+
+
+    public function exportarPDF(Request $request)
+    {
+        // Obtén los datos de la tabla
+        $productos = DB::table('productos as p')
+            ->where('p.estadoproducto', '=', 1)
+            ->join('categorias as c', 'p.id_categoria', '=', 'c.id')
+            ->select(
+                'p.id as id',
+                'p.codigo as codigo',
+                'p.nombre_producto as nombre',
+                'c.nombre_categoria as categoria',
+                'p.stock as stock',
+                'p.precio_compra as preciocompra',
+                'p.precio_venta as precioventa',
+                DB::raw("ROUND(p.precio_venta / 1.18, 2) as precio_sin_igv"),
+                DB::raw("ROUND((p.precio_venta / 1.18) * p.stock, 2) as valorizado")
+            )
+            ->get();
+
+        // Obtén los datos del gráfico
+        $stockporcategoria = DB::select('SELECT c.nombre_categoria as categoria, SUM(p.stock) as stock FROM productos p INNER JOIN categorias c ON p.id_categoria=c.id WHERE p.estadoproducto=1 GROUP BY c.nombre_categoria');
+        $nombres = [];
+        $valores = [];
+
+        foreach ($stockporcategoria as $row) {
+            $nombres[] = $row->categoria;
+            $valores[] = $row->stock;
+        }
+
+        // Decodifica el gráfico enviado como imagen base64 desde el frontend
+        // $chart = $request->input('chart'); // Gráfico enviado desde el formulario
+        // $chart = str_replace('data:image/png;base64,', '', $chart); // Limpia el prefijo
+        // $chart = str_replace(' ', '+', $chart); // Reemplaza espacios en blanco
+        // $chartImage = base64_decode($chart); // Decodifica la imagen
+
+        // // Guarda la imagen temporalmente en el servidor
+        // $chartPath = public_path('chart.png');
+        // file_put_contents($chartPath, $chartImage);
+
+        // if (!file_exists($chartPath)) {
+        //     return response()->json(['error' => 'No se pudo guardar la imagen del gráfico.'], 500);
+        // }
+        // // Renderiza la vista para el PDF
+        // $pdf = Pdf::loadView('reportes.pdfReporteStock', [
+        //     'productos' => $productos,
+        //     'nombres' => $nombres,
+        //     'valores' => $valores,
+        //     'chart' => $chartPath
+        // ]);
+
+        // // Elimina la imagen temporal
+        // unlink($chartPath);
+
+        // Decodifica el gráfico enviado como imagen base64 desde el frontend
+        $chart = $request->input('chart'); // Gráfico enviado desde el formulario
+        $chart = str_replace('data:image/png;base64,', '', $chart); // Limpia el prefijo
+        $chart = str_replace(' ', '+', $chart); // Reemplaza espacios en blanco
+        $chartImage = base64_decode($chart); // Decodifica la imagen
+
+        // Convierte la imagen a base64
+        $chartBase64 = base64_encode($chartImage);
+
+        // Renderiza la vista para el PDF
+        $pdf = Pdf::loadView('reportes.pdfReporteStock', [
+            'productos' => $productos,
+            'nombres' => $nombres,
+            'valores' => $valores,
+            'chart' => $chartBase64 // Pasa la imagen en base64
+        ]);
+
+
+        // Descarga el PDF generado
+        return $pdf->download('reporte-stock.pdf');
+    }
+
+
+    public function reporteVentaDetallada(Request $request)
+    {
+        $fechaActual = Carbon::now();
+
+        // Inicializar fechas predeterminadas (un mes antes y hoy) si no se reciben en el request
+        $fechaInicio = $request->fechaInicio 
+            ? Carbon::createFromFormat('Y-m-d', $request->fechaInicio)->startOfDay() 
+            : $fechaActual->copy()->subMonth()->startOfDay();
+
+        $fechaFin = $request->fechaFin 
+            ? Carbon::createFromFormat('Y-m-d', $request->fechaFin)->endOfDay() 
+            : $fechaActual->copy()->endOfDay();
+
+        if ($request->ajax()) {
+            try {
+                $data = DB::table('venta_detalle as vd')
+                    ->join('ventas as v', 'vd.id_venta', '=', 'v.id')
+                    ->where('v.estadoventa', '=', 1)
+                    ->join('productos as p', 'vd.id_producto', '=', 'p.id')
+                    ->join('clientes as c', 'v.id_cliente', '=', 'c.id')
+                    ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id')
+                    ->whereBetween('vd.created_at', [$fechaInicio, $fechaFin])
+                    ->select(
+                        'vd.id as id',
+                        DB::raw("IFNULL(DATE_FORMAT(vd.created_at, '%d-%m-%Y'), 'Sin fecha') as fecha"),
+                        DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"),
+                        'c.nombre_cliente as cliente',
+                        'c.dni_ruc as ruc_dni',
+                        'p.nombre_producto as producto',
+                        'p.codigo as codigoproducto',
+                        'vd.cantidad as cantidad',
+                        DB::raw("ROUND(vd.cantidad * vd.preciopoducto, 2) as importe"),
+                        DB::raw("ROUND((vd.cantidad * vd.preciopoducto) - ((vd.cantidad * vd.preciopoducto) / 1.18), 2) as igv"),
+                        DB::raw("CASE 
+                            WHEN vd.preciopoducto IS NULL OR vd.preciocompraproducto IS NULL THEN 0
+                            ELSE ROUND((((vd.preciopoducto / 1.18) - vd.preciocompraproducto) * vd.cantidad), 2) 
+                        END as ganancia")
+                    )
+                    ->get();
+
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+
+                
+            } catch (\Exception $e) {
+                Log::error('Error en reporteVentaDetallada: ' . $e->getMessage());
+                return response()->json(['error' => 'Error procesando los datos.'], 500);
+            }
+        }
+
+        //desempeño por mes
+        $ventasPorMes = Venta::select(
+            DB::raw("MONTH(created_at) as mes"),
+            DB::raw("COUNT(id) as num_ventas"),
+            DB::raw("SUM(total_pagar) as monto_total")
+        )
+        ->where('estadoventa', 1)
+        //->whereYear('created_at', $valoraño)
+        ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+        ->groupBy(DB::raw("MONTH(created_at)"))
+        ->orderBy(DB::raw("MONTH(created_at)"))
+        ->get();
+    
+        $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        $nombresMeses = [];
+        $numVentas = [];
+        $montosTotales = [];
+    
+        foreach ($ventasPorMes as $venta) {
+            $nombresMeses[] = $meses[$venta->mes - 1];
+            $numVentas[] = $venta->num_ventas;
+            $montosTotales[] = $venta->monto_total;
+        }
+
+        // Pasar fechas inicial y final predeterminadas a la vista
+        return view('reportes.reporteVentaDetallada', [
+            'fechaInicio' => $fechaInicio->format('Y-m-d'),
+            'fechaFin' => $fechaFin->format('Y-m-d'),
+            'nombresMeses' => $nombresMeses,
+            'numVentas' => $numVentas,
+            'montosTotales' => $montosTotales
+
+        ]);
+
     }
 
     /**

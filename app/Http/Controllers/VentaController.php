@@ -254,6 +254,7 @@ class VentaController extends Controller
                 $detalleVenta->id_producto = $producto->id; // Guardar el ID del producto en lugar del código
                 $detalleVenta->cantidad = $detalle['cantidad'];
                 $detalleVenta->preciopoducto = $detalle['precioVenta'];
+                $detalleVenta->preciocompraproducto = $producto->precio_compra;
                 date_default_timezone_set('America/Lima');
                     $fecha_actual = date("Y-m-d H:i:s");
                 $detalleVenta->created_at = $fecha_actual;
