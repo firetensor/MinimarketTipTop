@@ -190,9 +190,6 @@
         const nombres = <?php echo json_encode($nombres); ?>;;
         
 
-        Chart.defaults.global.defaultFontFamily = "Lato";
-        Chart.defaults.global.defaultFontSize = 18;
-
         var densityData2 = {
             label: 'Stock Disponible',
             data: valores,
@@ -206,13 +203,30 @@
                 labels: nombres,
                 datasets: [densityData2]
             },
+            // options: {
+            //     plugins: {
+            //         datalabels: {
+            //             display: false // Esto oculta los datos escritos en las barras
+            //         }
+            //     }
+            // }
             options: {
                 plugins: {
-                    datalabels: {
-                        display: true // Esto oculta los datos escritos en las barras
-                    }
-                }
-            }
+                    legend: { display: true },
+                    tooltip: { enabled: true },
+                    datalabels: { // Configurar etiquetas
+                        display: true, // Mostrar etiquetas
+                        color: '#000', // Color del texto
+                        font: {
+                            size: 14, // Tamaño de la fuente
+                            weight: 'bold', // Peso de la fuente
+                        },
+                        align: 'end', // Posición de las etiquetas
+                        anchor: 'end', // Posición en relación a la barra
+                    },
+                },
+            },
+            plugins: [ChartDataLabels], // Activar el complemento de etiquetas
         });
     // Script para exportar el gráfico a PDF
         document.getElementById('exportPdfForm').addEventListener('submit', function (event) {
