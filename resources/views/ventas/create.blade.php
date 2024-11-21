@@ -411,7 +411,12 @@
                     data: null,
                     name: 'name',
                     'render': function(data, type, row) {
-                        return @can('permiso.show') data.action1 @endcan;
+                        // return @can('permiso.show') data.action1 @endcan;
+                        @can('permiso.show') 
+                            return data.action1 ?? ''; // Mostrar acción si tiene permiso
+                        @else
+                            return ''; // Devolver vacío si no tiene permiso
+                        @endcan
                     }
                 }
             ]
@@ -487,7 +492,12 @@
                     data: null,
                     name: 'name',
                     'render': function(data2, type, row) {
-                        return @can('permiso.show') data2.action2 @endcan;
+                        //return @can('permiso.show') data2.action2 @endcan;
+                        @can('permiso.show') 
+                            return data2.action2 ?? ''; // Mostrar acción si tiene permiso
+                        @else
+                            return ''; // Devolver vacío si no tiene permiso
+                        @endcan
                     }
                 }
             ]
