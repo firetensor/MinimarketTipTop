@@ -43,7 +43,7 @@
 
 
 
-  
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -52,21 +52,8 @@
   <!-- Navbar -->
   <nav id="navprincipal" class="main-header navbar navbar-expand navbar-light navbar-white">
     <!-- Left navbar links -->
-    <ul class="navbar-nav col-10">
-      <li class="nav-item ">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('home')}}" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block ">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
 
-    </ul>
-    <div class="col-1 modo" id="modo">
-      <i class="fas fa-toggle-on"></i>
-    </div>
+
     <ul class="navbar-nav ml-auto">
 
       <li>
