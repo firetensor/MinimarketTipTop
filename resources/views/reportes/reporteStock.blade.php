@@ -8,8 +8,8 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Relación completa de Stock</h5>
-            
-              <p class="card-text" style="text-align: right"> 
+
+              <p class="card-text" style="text-align: right">
                 <div class="row">
                     <div class="col-8"></div>
                     <div class="col-md-2"><a href="{{route('exportar.reporteStock')}}" class="btn btn-success"> <i class="fas fa-file-export"></i>
@@ -23,8 +23,8 @@
                         </form>
                     </div>
                 </div>
-              
-                
+
+
                 {{-- <a href="{{route('exportar.pdf')}}" class="btn btn-danger" >Exportar PDF</a> --}}
 
                 </p>
@@ -40,7 +40,7 @@
               <table class="table table-striped nowrap" id="table-stocks" name="table-stocks">
                 <thead style="background-color:#1C91EC;color: #fff;">
                 <tr>
-                  <th scope="col">ID</th>
+                  {{-- <th scope="col">ID</th> --}}
                   <th scope="col">Código</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Categoría</th>
@@ -49,7 +49,7 @@
                   <th scope="col">Valorizado S/</th>
                   <th scope="col">Precio compra S/</th>
                   <th scope="col">Precio venta S/</th>
-                  
+
                 </tr>
                 </thead>
 
@@ -67,7 +67,7 @@
             <div class="card card-success">
                 <div class="card-header">
                     <h3 class="card-title">Stock de productos por categoría</h3>
-        
+
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -80,13 +80,13 @@
                     <div class="card-body">
                     <div class="chart">
                         <canvas id="densityChart2" width="600" height="400"></canvas>
-        
+
                     </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
-                
-                
+
+
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
     setTimeout(function () {
         //selecciono el id mensaje y lo remuevo en 2000 segundos
         document.querySelector('#mensaje').remove();
-        
+
     }, 6000);
 </script>
 <script>
@@ -144,10 +144,10 @@
             ],
             ajax: "{{ route('reporte.stock') }}",
             columns: [
-                {
+/*                 {
                     data: 'id', // Campo de ID de venta
                     name: 'id'
-                },
+                }, */
                 {
                     data: 'codigo',
                     name: 'codigo'
@@ -181,20 +181,20 @@
                     data: 'precioventa',
                     name: 'precioventa'
                 },
-                
+
             ]
         });
 
         var densityCanvas2 = document.getElementById("densityChart2")
         const valores = <?php echo json_encode($valores); ?>;
         const nombres = <?php echo json_encode($nombres); ?>;;
-        
+
 
         var densityData2 = {
             label: 'Stock Disponible',
             data: valores,
             backgroundColor:'#71EC1C'
-        
+
         };
 
         var barChart2 = new Chart(densityCanvas2, {

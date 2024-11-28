@@ -9,34 +9,34 @@
     <div class="row">
         <div class="col-md-12">
             {{-- <nav class="navbar float-right">
-       
+
                 <form class="form-inline my-2" method="GET">
                     Desde: <input name="fechaInicio" id="fechaInicio" class="form-control me-2" type="date" placeholder="Busqueda por apellido" aria-label="Search"  required>
                       Hasta: <input name="fechaFin" id="fechaFin" class="form-control me-2" type="date" placeholder="Busqueda por apellido" aria-label="Search"  required>
-                    
+
                     <button class="btn btn-success" type="submit">Buscar</button>
-                      
-                </form>  
+
+                </form>
                 <a href="{{route('reportepdf',$fechaInicio.$fechaFin)}}" class="btn btn-primary">Exportar PDF</a>
             </nav> --}}
             <nav class="navbar float-right">
                 <form class="form-inline my-2" id="form-fechas">
-                    Desde: 
-                    <input 
-                        name="fechaInicio" 
-                        id="fechaInicio" 
-                        class="form-control me-2" 
-                        type="date" 
-                        value="{{ $fechaInicio }}" 
+                    Desde:
+                    <input
+                        name="fechaInicio"
+                        id="fechaInicio"
+                        class="form-control me-2"
+                        type="date"
+                        value="{{ $fechaInicio }}"
                         required
                     >
-                    Hasta: 
-                    <input 
-                        name="fechaFin" 
-                        id="fechaFin" 
-                        class="form-control me-2" 
-                        type="date" 
-                        value="{{ $fechaFin }}" 
+                    Hasta:
+                    <input
+                        name="fechaFin"
+                        id="fechaFin"
+                        class="form-control me-2"
+                        type="date"
+                        value="{{ $fechaFin }}"
                         required
                     >
                     <button class="btn btn-success" type="button" id="filtrar">Buscar</button>
@@ -58,7 +58,7 @@
       <table class="table table-striped nowrap" id="table-ventasdetalladas" name="table-ventasdetalladas">
         <thead style="background-color:#1C91EC;color: #fff;">
         <tr>
-          <th scope="col">ID</th>
+          {{-- <th scope="col">ID</th> --}}
           <th scope="col">Fecha</th>
           <th scope="col">Boleta</th>
           <th scope="col">Cliente</th>
@@ -69,7 +69,7 @@
           <th scope="col">Importe S/.</th>
           <th scope="col">IGV S/.</th>
           <th scope="col">Ganancia S/.</th>
-          
+
         </tr>
         </thead>
 
@@ -83,7 +83,7 @@
     <div class="card card-success" style="width: 50%">
         <div class="card-header">
           <h3 class="card-title">Desempeño de ventas por mes</h3>
-          
+
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -116,7 +116,7 @@
     setTimeout(function () {
         //selecciono el id mensaje y lo remuevo en 2000 segundos
         document.querySelector('#mensaje').remove();
-        
+
     }, 6000);
 </script> --}}
 
@@ -182,10 +182,10 @@
                 }
             },
             columns: [
-                {
+/*                 {
                     data: 'id', // Campo de ID de venta
                     name: 'id'
-                },
+                }, */
                 {
                     data: 'fecha',
                     name: 'fecha'
@@ -227,8 +227,8 @@
                     data: 'ganancia',
                     name: 'ganancia'
                 }
-                
-                
+
+
             ]
         });
 
@@ -305,7 +305,7 @@
             // Recargar la tabla
             table.ajax.reload();
 
-           
+
         });
     });
 </script>
@@ -328,7 +328,7 @@
 
 //         // Inicializar la tabla DataTable
 //         var table = $('#table-ventasdetalladas').DataTable({
-//             responsive: true, 
+//             responsive: true,
 //             autoWidth: false,
 //             searchDelay: 2000,
 //             processing: true,
@@ -336,9 +336,9 @@
 //             scrollX: true,
 //             scroller: true,
 //             "language": {
-//                 "lengthMenu": "Mostrar _MENU_ registros por página", 
+//                 "lengthMenu": "Mostrar _MENU_ registros por página",
 //                 "zeroRecords": "Nada encontrado - disculpa",
-//                 "info": "Mostrando la página _PAGE_ de _PAGES_", 
+//                 "info": "Mostrando la página _PAGE_ de _PAGES_",
 //                 "infoEmpty": "No hay registros disponibles",
 //                 "infoFiltered": "(filtrado de _MAX_ registros totales)",
 //                 "search": "Buscar:",
@@ -403,14 +403,14 @@
 //                         {
 //                             label: 'Número de Ventas',
 //                             data: numVentas,
-//                             backgroundColor: 'rgba(104, 223, 214, 0.95)', 
+//                             backgroundColor: 'rgba(104, 223, 214, 0.95)',
 //                             borderColor: 'rgba(104, 223, 214, 0.95)',
 //                             borderWidth: 1
 //                         },
 //                         {
 //                             label: 'Monto Total (S/)',
 //                             data: montosTotales,
-//                             backgroundColor: 'rgba(213, 248, 52, 0.95)', 
+//                             backgroundColor: 'rgba(213, 248, 52, 0.95)',
 //                             borderColor: 'rgba(213, 248, 52, 0.95)',
 //                             borderWidth: 1
 //                         }

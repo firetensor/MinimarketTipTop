@@ -16,9 +16,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function showlogin()
     {
 
@@ -105,20 +102,8 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-
         $query=User::where('email','=',$request->get('email'))->get();
         if($query->count()!=0) //si lo encuentra, osea si no esta vacia
         {
@@ -146,23 +131,16 @@ class UserController extends Controller
             //     return back()->withErrors(['password'=>'Las contraseñas no coinciden','confipassword'=>'Las contraseñas no coinciden'])
             // ->withInput(request(['name','email','password','confipassword']));
                 return response()->json(['error' => 'Las contraseñas no coinciden'], 401);
-
             }
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $usuario = User::find($id);
         return response()->json(['data' => $usuario]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
 
@@ -173,9 +151,6 @@ class UserController extends Controller
         return view('users.edit',compact('usuario','rolesAsignados','roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $data=request()->validate([
@@ -183,22 +158,16 @@ class UserController extends Controller
         ],
         [
             'name.required'=>'Ingrese nombre',
-
         ]);
         $usuario =  User::find($id);
         $usuario->name = $request->name;
         // Obtengo los roles seleccionados desde la solicitud
         $rolesSeleccionados = $request->input('roles');
-
         // Asigna los roles seleccionados al usuario
         $usuario->roles()->sync($rolesSeleccionados);
         //$usuario->roles()->sync($rolesSeleccionados); hace lo mismo q el de arriba
-
         $usuario->save();
-
         return redirect()->route('usuario.index')->with('datos','Usuario actualizado y roles asignados correctamente ...!');
-
-
     }
     public function destroy(string $id)
     {
@@ -208,5 +177,6 @@ class UserController extends Controller
         //return redirect()->route('usuario.index')->with('datos','Usuario eliminado ...!');
         return response()->json(['success' => 'Usuario Eliminado Exitosamente.']);
     }
+
 
 }
