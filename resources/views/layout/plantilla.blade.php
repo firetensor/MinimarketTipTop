@@ -6,6 +6,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Token CSRF -->
   <title>@yield('titulo')</title><!--parte cambiante con yield-->
   <script src="https://kit.fontawesome.com/072340084d.js" crossorigin="anonymous"></script>
+
+  <!-- Ionicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
