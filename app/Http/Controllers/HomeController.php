@@ -14,21 +14,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
-    }
-    public function inicio()
-    {
-        return view('inicio');
-    }
-
-    public function salir()
-    {
-        Auth::logout();
-        return redirect()->route('login');
-    }
-
-    public function home()
-    {
         // Calcula la cantidad de clientes activos
         $clientesTotal = Cliente::where('estadocliente', 1)->count();
 
@@ -42,6 +27,17 @@ class HomeController extends Controller
         // Retorna la vista 'home' con los datos de clientes y usuarios
         return view('home', compact('clientesTotal', 'usuariosTotal', 'stockTotal', 'ventaTotal'));
     }
+    public function inicio()
+    {
+        return view('inicio');
+    }
+
+    public function salir()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
 
 
 }

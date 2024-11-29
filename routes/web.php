@@ -36,6 +36,11 @@ Route::post('/salir', [UserController::class,'salir'])->name('logout');
 
 Route::get('/Home', [HomeController::class,'index'])->name('home')->Middleware('auth');
 
+// Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+
+
+
 Route::post('/identificacion', [UserController::class,'verificarlogin'])->name('identificacion');
 
 Route::resource('usuario', UserController::class);
@@ -73,9 +78,9 @@ Route::get('/reporteStock', [ReporteController::class,'reporteStock'])->name('re
 Route::get('/reporteVentaDetallada', [ReporteController::class,'reporteVentaDetallada'])->name('reporte.ventaDetallada');
 
 //excel
-/* Route::get('/exportar-reportestock', function () {
+ Route::get('/exportar-reportestock', function () {
   return Excel::download(new StockExport, 'ReporteStock.xlsx');
-})->name('exportar.reporteStock'); */
+})->name('exportar.reporteStock');
 
 //pdf
 Route::post('/exportar-pdf', [ReporteController::class, 'exportarPDF'])->name('exportar.pdf');
@@ -127,7 +132,7 @@ Route::get('/api/ventas', [VentaController::class, 'obtenerDatosVentas']);
 
 
 
-Route::get('/home', [HomeController::class, 'home'])->name('home');
+
 
 
 
