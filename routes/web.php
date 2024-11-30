@@ -128,10 +128,19 @@ Route::post('detalle/create', [DetalleCompraController::class, 'store'])->name('
 Route::get('/prediccion', [PrediccionController::class, 'index'])->name('prediccion.index');
 Route::get('/api/ventas', [VentaController::class, 'obtenerDatosVentas']);
 
+//Ayuda del módulo de ventas
 
+Route::get('/abrir-ayuda', function () {
+    $ruta = "C:\\MOD_VENTAS\\Ayuda_ventas.chm"; // Ruta completa al archivo de ayuda
 
+    if (file_exists($ruta)) {
+        // Comando ajustado para abrir el archivo en segundo plano
+        pclose(popen('start /B "Ayuda" "' . $ruta . '"', 'r'));
+        return response()->json(['success' => true]);
+    }
 
-
+    return response()->json(['success' => false, 'message' => 'Archivo no encontrado'], 404);
+})->name('abrirAyuda');
 
 
 

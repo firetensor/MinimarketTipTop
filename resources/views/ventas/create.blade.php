@@ -1,8 +1,5 @@
 @extends('layout.plantilla')
-
 @section('titulo','Venta')
-
-
 @section('contenido')
 
 <div class="container ">
@@ -17,6 +14,8 @@
             </div>
         @endif
     </div>
+
+<p>Presione F1 para la ayuda en línea</p>
 
     <form action="{{--route('venta.store')--}}" method="post">
         @csrf
@@ -232,7 +231,7 @@
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Clientes</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -255,7 +254,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
         </div>
@@ -266,7 +265,7 @@
         <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Productos</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -290,7 +289,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
         </div>
@@ -341,7 +340,7 @@
             <div class="modal-footer">
                 <button type="button" id="btnguardarcliente" class="btn btn-success">
                     Registrar</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
         </div>
@@ -350,6 +349,35 @@
 @endsection
 
 @section('script')
+
+<script>
+    function capturarTecla(event) {
+        // Verificar si se presionó la tecla F1
+        if (event.key === "F1") {
+            event.preventDefault(); // Prevenir la acción predeterminada del navegador
+
+            // Llamar al backend para abrir el archivo de ayuda
+            fetch('{{ route("abrirAyuda") }}')
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Ayuda abierta correctamente.");
+                    } else {
+                        alert("No se pudo abrir el archivo de ayuda.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al intentar abrir la ayuda:", error);
+                });
+        }
+    }
+
+    // Escuchar eventos de teclado en toda la página
+    document.addEventListener("keydown", capturarTecla);
+</script>
+
+
+
+
 <script>
     //para cerrar el mensaje
     setTimeout(function () {
@@ -412,7 +440,7 @@
                     name: 'name',
                     'render': function(data, type, row) {
                         // return @can('permiso.show') data.action1 @endcan;
-                        @can('permiso.show') 
+                        @can('permiso.show')
                             return data.action1 ?? ''; // Mostrar acción si tiene permiso
                         @else
                             return ''; // Devolver vacío si no tiene permiso
@@ -493,7 +521,7 @@
                     name: 'name',
                     'render': function(data2, type, row) {
                         //return @can('permiso.show') data2.action2 @endcan;
-                        @can('permiso.show') 
+                        @can('permiso.show')
                             return data2.action2 ?? ''; // Mostrar acción si tiene permiso
                         @else
                             return ''; // Devolver vacío si no tiene permiso
