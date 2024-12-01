@@ -305,7 +305,7 @@
             // Recargar la tabla
             table.ajax.reload();
 
-            
+
         });
     });
 </script>
