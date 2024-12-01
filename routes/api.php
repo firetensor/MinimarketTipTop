@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('reportes', [ReporteController::class, 'getReportes']);
+
+Route::get('reporteStock', [ReporteController::class,'reporteStock']);
+Route::get('reporteVentaDetallada', [ReporteController::class,'reporteVentaDetallada']);
+
+Route::post('login', [UserController::class,'verificarlogin']);
+
+
+

@@ -17,4 +17,5 @@ class Boleta extends Model
     {
         return $this->hasOne(Venta::class,'id','venta_id');
     }
+    
 }

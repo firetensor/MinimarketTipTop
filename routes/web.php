@@ -80,6 +80,11 @@ Route::get('/exportar-reportestock', function () {
 //pdf
 Route::post('/exportar-pdf', [ReporteController::class, 'exportarPDF'])->name('exportar.pdf');
 
+//reporte producto
+Route::get('/reporteProducto', [ReporteController::class,'reporteProducto'])->name('reporte.producto');
+Route::get('/reporte/reporte-productografico', [ReporteController::class, 'reporteProductoGrafico'])->name('reporte.grafico');
+Route::get('/reporte/generar-grafico', [ReporteController::class, 'generarGrafico'])->name('reporte.generarGrafico');
+
 
 //compras
 Route::get('compras', [CompraController::class, 'index'])->name('compra.index');

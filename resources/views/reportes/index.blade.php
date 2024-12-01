@@ -14,7 +14,7 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item"><a href="{{route('reporte.stock')}}" style=" text-decoration: none;">Stock</a></li>
-              <li class="list-group-item"><a href="" style=" text-decoration: none;">Kardex</a></li>
+              <li class="list-group-item"><a href="{{route('reporte.producto')}}" style=" text-decoration: none;">Productos</a></li>
               <li class="list-group-item"><a href="{{route('reporte.ventaDetallada')}}" style=" text-decoration: none;">Venta detallada</a></li>
             </ul>
         </div>

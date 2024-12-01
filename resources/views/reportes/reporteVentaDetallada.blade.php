@@ -304,7 +304,7 @@
         $('#filtrar').click(function () {
             // Recargar la tabla
             table.ajax.reload();
-
+            
            
         });
     });
