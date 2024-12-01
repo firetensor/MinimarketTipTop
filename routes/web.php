@@ -36,6 +36,11 @@ Route::post('/salir', [UserController::class,'salir'])->name('logout');
 
 Route::get('/Home', [HomeController::class,'index'])->name('home')->Middleware('auth');
 
+// Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+
+
+
 Route::post('/identificacion', [UserController::class,'verificarlogin'])->name('identificacion');
 
 Route::resource('usuario', UserController::class);
@@ -73,7 +78,7 @@ Route::get('/reporteStock', [ReporteController::class,'reporteStock'])->name('re
 Route::get('/reporteVentaDetallada', [ReporteController::class,'reporteVentaDetallada'])->name('reporte.ventaDetallada');
 
 //excel
-Route::get('/exportar-reportestock', function () {
+ Route::get('/exportar-reportestock', function () {
   return Excel::download(new StockExport, 'ReporteStock.xlsx');
 })->name('exportar.reporteStock');
 
@@ -127,6 +132,23 @@ Route::post('detalle/create', [DetalleCompraController::class, 'store'])->name('
 //Prediccion
 Route::get('/prediccion', [PrediccionController::class, 'index'])->name('prediccion.index');
 Route::get('/api/ventas', [VentaController::class, 'obtenerDatosVentas']);
+
+//Ayuda del módulo de ventas
+
+Route::get('/abrir-ayuda', function () {
+    $ruta = "C:\\MOD_VENTAS\\Ayuda_ventas.chm"; // Ruta completa al archivo de ayuda
+
+    if (file_exists($ruta)) {
+        // Comando ajustado para abrir el archivo en segundo plano
+        pclose(popen('start /B "Ayuda" "' . $ruta . '"', 'r'));
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Archivo no encontrado'], 404);
+})->name('abrirAyuda');
+
+
+
 
 
 

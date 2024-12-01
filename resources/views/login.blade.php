@@ -125,20 +125,7 @@
                     </form>
                 </div>
 
-                <div class="pull-bottom sm-pull-bottom">
-                    <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
-                        <div class="col-sm-12 no-padding m-t-10">
-                            <p>
-                                <small>
-                                    Ingresa a la Intranet con tus credenciales del
-                                    <i class="fa fa-desktop fa-fw fa-lg"></i>
-                                    <b>ERP </b>.<br />Soporte al anexo
-                                    <i class="fas fa-info-circle"></i> <a href="https://wa.me/51929386665/?text=Hola%20Necesito%20ayuda" target="_blank"><b>A1E9M9A8</b>.</a>
-                                </small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

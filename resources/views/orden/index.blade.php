@@ -23,7 +23,7 @@
               <table class="table table-striped nowrap" id="table-orden" name="table-orden">
                 <thead style="background-color:#1C91EC;color: #fff;">
                 <tr>
-                  <th scope="col">ID</th>
+                  <th scope="col">N°</th>
                   <th scope="col">Fecha</th>
                   <th scope="col">Orden de compra</th>
                   <th scope="col">Proveedor</th>

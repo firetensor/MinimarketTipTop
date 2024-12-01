@@ -59,6 +59,4 @@ public function destroy($id)
     return redirect()->route('cliente.index')->with('success', 'Cliente eliminado con éxito.');
 }
 
-
-
 }

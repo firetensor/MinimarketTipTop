@@ -15,6 +15,7 @@ class ProductoController extends Controller
         // Recupera todas las categorías
         $productos = Producto::all();
         $productos = Producto::with(['categoria', 'user'])->where('estadoproducto','=',1)->get();
+
         // Pasa las categorías a la vista
         return view('productos.index', compact('productos'));
     }
@@ -53,11 +54,6 @@ class ProductoController extends Controller
             return response()->json(['success' => false, 'message' => 'Producto no encontrado']);
         }
     }
-
-
-
-
-
 
     public function store(Request $request)
     {
@@ -200,6 +196,10 @@ public function destroy($id)
 
     return redirect()->route('producto.index')->with('success', 'Cliente eliminado con éxito.');
 }
+
+
+
+
 
 
 

@@ -6,6 +6,12 @@
   <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Token CSRF -->
   <title>@yield('titulo')</title><!--parte cambiante con yield-->
   <script src="https://kit.fontawesome.com/072340084d.js" crossorigin="anonymous"></script>
+
+  <!-- Ionicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -45,7 +51,7 @@
 
 
 
-  
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -54,21 +60,8 @@
   <!-- Navbar -->
   <nav id="navprincipal" class="main-header navbar navbar-expand navbar-light navbar-white">
     <!-- Left navbar links -->
-    <ul class="navbar-nav col-10">
-      <li class="nav-item ">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('home')}}" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block ">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
 
-    </ul>
-    <div class="col-1 modo" id="modo">
-      <i class="fas fa-toggle-on"></i>
-    </div>
+
     <ul class="navbar-nav ml-auto">
 
       <li>
@@ -404,12 +397,10 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2023 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-  </footer>
+  <footer class="main-footer" style="display: flex; justify-content: center; align-items: center; text-align: center;">
+    © Todos los derechos reservados Minimarket Tip Top S.A.C. Av. Leoncio Prado N°14, Pacasmayo, Perú.
+</footer>
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
