@@ -22,8 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('reportes', [ReporteController::class, 'getReportes']);
 
-Route::get('reporteStock', [ReporteController::class,'reporteStock']);
-Route::get('reporteVentaDetallada', [ReporteController::class,'reporteVentaDetallada']);
+Route::get('reporteStock', [ReporteController::class,'reporteStockapi']);
+Route::get('reporteVentaDetallada', [ReporteController::class,'reporteVentaDetalladaapi']);
 
 Route::post('login', [UserController::class,'verificarlogin']);
 
