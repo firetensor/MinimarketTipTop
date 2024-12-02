@@ -1027,14 +1027,88 @@ class ReporteController extends Controller
 
     // }
 
+    // public function reporteVentaDetalladaapi(Request $request)
+    // {
+
+    //     $fechaActual = Carbon::now();
+
+    //     // Inicializar fechas predeterminadas (un mes antes y hoy) si no se reciben en el request
+    //     $fechaInicio = $request->fechaInicio
+    //         ? Carbon::createFromFormat('Y-m-d', $request->fechaInicio)->startOfDay()
+    //         : $fechaActual->copy()->subMonth()->startOfDay();
+
+    //     $fechaFin = $request->fechaFin
+    //         ? Carbon::createFromFormat('Y-m-d', $request->fechaFin)->endOfDay()
+    //         : $fechaActual->copy()->endOfDay();
+
+    //     try {
+    //         $data = DB::table('venta_detalle as vd')
+    //             ->join('ventas as v', 'vd.id_venta', '=', 'v.id')
+    //             ->where('v.estadoventa', '=', 1)
+    //             ->join('productos as p', 'vd.id_producto', '=', 'p.id')
+    //             ->join('clientes as c', 'v.id_cliente', '=', 'c.id')
+    //             ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id')
+    //             ->whereBetween('vd.created_at', [$fechaInicio, $fechaFin])
+    //             ->select(
+    //                 'vd.id as id',
+    //                 DB::raw("IFNULL(DATE_FORMAT(vd.created_at, '%d-%m-%Y'), 'Sin fecha') as fecha"),
+    //                 DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"),
+    //                 'c.nombre_cliente as cliente',
+    //                 'c.dni_ruc as ruc_dni',
+    //                 'p.nombre_producto as producto',
+    //                 'p.codigo as codigoproducto',
+    //                 'vd.cantidad as cantidad',
+    //                 DB::raw("ROUND(vd.cantidad * vd.preciopoducto, 2) as importe"),
+    //                 DB::raw("ROUND((vd.cantidad * vd.preciopoducto) - ((vd.cantidad * vd.preciopoducto) / 1.18), 2) as igv"),
+    //                 DB::raw("CASE 
+    //                     WHEN vd.preciopoducto IS NULL OR vd.preciocompraproducto IS NULL THEN 0
+    //                     ELSE ROUND((((vd.preciopoducto / 1.18) - vd.preciocompraproducto) * vd.cantidad), 2) 
+    //                 END as ganancia")
+    //             )
+    //             ->get();
+
+    //         //desempeño por mes
+    //         $ventasPorMes = Venta::select(
+    //             DB::raw("MONTH(created_at) as mes"),
+    //             DB::raw("COUNT(id) as num_ventas"),
+    //             DB::raw("SUM(total_pagar) as monto_total")
+    //         )
+    //         ->where('estadoventa', 1)
+    //         //->whereYear('created_at', $valoraño)
+    //         ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+    //         ->groupBy(DB::raw("MONTH(created_at)"))
+    //         ->orderBy(DB::raw("MONTH(created_at)"))
+    //         ->get();
+        
+    //         $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    //         $nombresMeses = [];
+    //         $numVentas = [];
+    //         $montosTotales = [];
+        
+    //         foreach ($ventasPorMes as $venta) {
+    //             $nombresMeses[] = $meses[$venta->mes - 1];
+    //             $numVentas[] = $venta->num_ventas;
+    //             $montosTotales[] = $venta->monto_total;
+    //         }
+
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'message' => 'Reporte venta detallada exitosa.',
+    //             'tabla' => DataTables::of($data)->addIndexColumn()->make(true),
+    //             'grafico' => $ventasPorMes,
+    //             'fechaInicio' =>$fechaInicio, 
+    //             'fechaFin' =>$fechaFin
+    //         ]);
+
+    //     } catch (\Exception $e) {
+    //         Log::error('Error en reporteVentaDetallada: ' . $e->getMessage());
+    //         return response()->json(['error' => 'Error procesando los datos.'], 500);
+    //     }
+        
+    // }
+    //ajustada para flutter
     public function reporteVentaDetalladaapi(Request $request)
     {
-        // Validación de parámetros de fecha
-        $request->validate([
-            'fechaInicio' => 'nullable|date_format:Y-m-d',
-            'fechaFin' => 'nullable|date_format:Y-m-d',
-        ]);
-
         $fechaActual = Carbon::now();
 
         // Inicializar fechas predeterminadas (un mes antes y hoy) si no se reciben en el request
@@ -1046,87 +1120,75 @@ class ReporteController extends Controller
             ? Carbon::createFromFormat('Y-m-d', $request->fechaFin)->endOfDay()
             : $fechaActual->copy()->endOfDay();
 
-        if ($request->ajax()) {
-            try {
-                $data = DB::table('venta_detalle as vd')
-                    ->join('ventas as v', 'vd.id_venta', '=', 'v.id')
-                    ->where('v.estadoventa', '=', 1)
-                    ->join('productos as p', 'vd.id_producto', '=', 'p.id')
-                    ->join('clientes as c', 'v.id_cliente', '=', 'c.id')
-                    ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id')
-                    ->whereBetween('vd.created_at', [$fechaInicio, $fechaFin])
-                    ->select(
-                        'vd.id as id',
-                        DB::raw("IFNULL(DATE_FORMAT(vd.created_at, '%d-%m-%Y'), 'Sin fecha') as fecha"),
-                        DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"),
-                        'c.nombre_cliente as cliente',
-                        'c.dni_ruc as ruc_dni',
-                        'p.nombre_producto as producto',
-                        'p.codigo as codigoproducto',
-                        'vd.cantidad as cantidad',
-                        DB::raw("ROUND(vd.cantidad * vd.preciopoducto, 2) as importe"),
-                        DB::raw("ROUND((vd.cantidad * vd.preciopoducto) - ((vd.cantidad * vd.preciopoducto) / 1.18), 2) as igv"),
-                        DB::raw("CASE 
-                            WHEN vd.preciopoducto IS NULL OR vd.preciocompraproducto IS NULL THEN 0
-                            ELSE ROUND((((vd.preciopoducto / 1.18) - vd.preciocompraproducto) * vd.cantidad), 2) 
-                        END as ganancia")
-                    )
-                    ->get();
+        try {
+            // Datos para la tabla
+            $data = DB::table('venta_detalle as vd')
+                ->join('ventas as v', 'vd.id_venta', '=', 'v.id')
+                ->where('v.estadoventa', '=', 1)
+                ->join('productos as p', 'vd.id_producto', '=', 'p.id')
+                ->join('clientes as c', 'v.id_cliente', '=', 'c.id')
+                ->leftJoin('boletas as b', 'v.id', '=', 'b.venta_id')
+                ->whereBetween('vd.created_at', [$fechaInicio, $fechaFin])
+                ->select(
+                    'vd.id as id',
+                    DB::raw("IFNULL(DATE_FORMAT(vd.created_at, '%d-%m-%Y'), 'Sin fecha') as fecha"),
+                    DB::raw("IFNULL(CONCAT(b.serie, '-', b.numero), 'NO GENERADO') as boleta"),
+                    'c.nombre_cliente as cliente',
+                    'c.dni_ruc as ruc_dni',
+                    'p.nombre_producto as producto',
+                    'p.codigo as codigoproducto',
+                    'vd.cantidad as cantidad',
+                    DB::raw("ROUND(vd.cantidad * vd.preciopoducto, 2) as importe"),
+                    DB::raw("ROUND((vd.cantidad * vd.preciopoducto) - ((vd.cantidad * vd.preciopoducto) / 1.18), 2) as igv"),
+                    DB::raw("CASE 
+                        WHEN vd.preciopoducto IS NULL OR vd.preciocompraproducto IS NULL THEN 0
+                        ELSE ROUND((((vd.preciopoducto / 1.18) - vd.preciocompraproducto) * vd.cantidad), 2) 
+                    END as ganancia")
+                )
+                ->get();
 
-                return response()->json([
-                    'status' => 'success',
-                    'message' => 'Reporte venta detallada exitosa.',
-                    'data' => [
-                        'fechaInicio' => $fechaInicio->format('Y-m-d'),
-                        'fechaFin' => $fechaFin->format('Y-m-d'),
-                        'nombresMeses' => $this->getNombresMeses($fechaInicio, $fechaFin),
-                        'numVentas' => $this->getNumVentas($fechaInicio, $fechaFin),
-                        'montosTotales' => $this->getMontosTotales($fechaInicio, $fechaFin)
-                    ]
-                ]);
-            } catch (\Exception $e) {
-                Log::error('Error en reporteVentaDetallada: ' . $e->getMessage());
-                return response()->json(['error' => 'Error procesando los datos.'], 500);
+            // Datos para el gráfico
+            $ventasPorMes = Venta::select(
+                DB::raw("MONTH(created_at) as mes"),
+                DB::raw("COUNT(id) as num_ventas"),
+                DB::raw("SUM(total_pagar) as monto_total")
+            )
+            ->where('estadoventa', 1)
+            ->whereBetween('created_at', [$fechaInicio, $fechaFin])
+            ->groupBy(DB::raw("MONTH(created_at)"))
+            ->orderBy(DB::raw("MONTH(created_at)"))
+            ->get();
+
+            // Preparar datos para el gráfico
+            $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+            $nombresMeses = [];
+            $numVentas = [];
+            $montosTotales = [];
+
+            foreach ($ventasPorMes as $venta) {
+                $nombresMeses[] = $meses[$venta->mes - 1];
+                $numVentas[] = $venta->num_ventas;
+                $montosTotales[] = $venta->monto_total;
             }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Reporte venta detallada exitosa.',
+                'tabla' => $data, // Datos detallados para la tabla
+                'grafico' => [
+                    'meses' => $nombresMeses,
+                    'numVentas' => $numVentas,
+                    'montosTotales' => $montosTotales
+                ],
+                'fechaInicio' => $fechaInicio,
+                'fechaFin' => $fechaFin
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error en reporteVentaDetallada: ' . $e->getMessage());
+            return response()->json(['error' => 'Error procesando los datos.'], 500);
         }
     }
 
-    private function getNombresMeses($fechaInicio, $fechaFin)
-    {
-        $ventasPorMes = Venta::select(
-            DB::raw("MONTH(created_at) as mes"),
-            DB::raw("COUNT(id) as num_ventas"),
-            DB::raw("SUM(total_pagar) as monto_total")
-        )
-        ->where('estadoventa', 1)
-        ->whereBetween('created_at', [$fechaInicio, $fechaFin])
-        ->groupBy(DB::raw("MONTH(created_at)"))
-        ->orderBy(DB::raw("MONTH(created_at)"))
-        ->get();
-
-        $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-        $nombresMeses = [];
-        
-        foreach ($ventasPorMes as $venta) {
-            $nombresMeses[] = $meses[$venta->mes - 1];
-        }
-
-        return $nombresMeses;
-    }
-
-    private function getNumVentas($fechaInicio, $fechaFin)
-    {
-        return Venta::where('estadoventa', 1)
-            ->whereBetween('created_at', [$fechaInicio, $fechaFin])
-            ->count();
-    }
-
-    private function getMontosTotales($fechaInicio, $fechaFin)
-    {
-        return Venta::where('estadoventa', 1)
-            ->whereBetween('created_at', [$fechaInicio, $fechaFin])
-            ->sum('total_pagar');
-    }
 
 
     // public function reporteStockapi(Request $request){
