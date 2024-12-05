@@ -136,7 +136,7 @@ Route::get('/api/ventas', [VentaController::class, 'obtenerDatosVentas']);
 //Ayuda del módulo de ventas
 
 Route::get('/abrir-ayuda', function () {
-    $ruta = "C:\\MOD_VENTAS\\Ayuda_ventas.chm"; // Ruta completa al archivo de ayuda
+    $ruta = public_path('ayuda/Ayuda_ventas.chm');  // Ruta completa al archivo de ayuda
 
     if (file_exists($ruta)) {
         // Comando ajustado para abrir el archivo en segundo plano
