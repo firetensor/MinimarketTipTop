@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+    laravel.fpm:
+        build:
+            context: .
+            target: fpm_server
+        image: tiptop/fpm_server
+        environment:
+            APP_DEBUG: "true"
+        networks:
+            - tiptop
+    laravel.cron:
+        build:
+            context: .
+            target: cron
+        image: tiptop/cron
+        networks:
+            - tiptop
+    laravel.web:
+        build:
+            context: .
+            target: web_server
+        image: tiptop/web_server
+        # Expose our application port (80) through a port on our local machine (8080)
+        ports:
+            - '8080:80'
+        environment:
+            APP_NAME: "tiptop"
+            FPM_HOST: "laravel.fpm:9000"
+        networks:
+            - tiptop
+    laravel.frontend:
+        build:
+            context: .
+            target: frontend
+        command: ["npm", "run", "dev"]
+        image: tiptop/frontend
+        networks:
+            - tiptop
+networks:
+    tiptop:
+        driver: bridge
